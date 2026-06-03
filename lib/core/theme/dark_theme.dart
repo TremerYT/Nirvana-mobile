@@ -1,0 +1,172 @@
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'app_colors.dart';
+import 'app_textstyle.dart';
+
+final ThemeData darkTheme = ThemeData(
+  brightness: Brightness.dark,
+  scaffoldBackgroundColor: AppColors.background,
+
+  colorScheme: const ColorScheme.dark(
+    surface: AppColors.surfaceDark,
+    primary: AppColors.primary,
+    onPrimary: AppColors.accentText,
+    secondary: AppColors.surfaceLight,
+    onSecondary: AppColors.textPrimary,
+    onSurface: AppColors.textPrimary,
+    outline: AppColors.border,
+    error: AppColors.error,
+  ),
+
+  appBarTheme: AppBarTheme(
+    backgroundColor: AppColors.background,
+    elevation: 0,
+    scrolledUnderElevation: 0,
+    centerTitle: true,
+    systemOverlayStyle: SystemUiOverlayStyle.light,
+    titleTextStyle: GoogleFonts.poppins(
+      fontSize: 16,
+      fontWeight: FontWeight.w600,
+      color: AppColors.textPrimary,
+      letterSpacing: 0.5,
+    ),
+    iconTheme: const IconThemeData(color: AppColors.textPrimary),
+  ),
+
+  bottomNavigationBarTheme: const BottomNavigationBarThemeData(
+    backgroundColor: AppColors.surfaceDark,
+    selectedItemColor: AppColors.primary,
+    unselectedItemColor: AppColors.textMuted,
+    showSelectedLabels: false,
+    showUnselectedLabels: false,
+    type: BottomNavigationBarType.fixed,
+    elevation: 0,
+  ),
+
+  elevatedButtonTheme: ElevatedButtonThemeData(
+    style: ElevatedButton.styleFrom(
+      backgroundColor: AppColors.primary,
+      foregroundColor: AppColors.accentText,
+      elevation: 0,
+      shadowColor: AppColors.primary,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(50)),
+      textStyle: GoogleFonts.poppins(
+        fontSize: 15,
+        fontWeight: FontWeight.w600,
+        letterSpacing: 0.3,
+      ),
+      padding: const EdgeInsets.symmetric(horizontal: 28, vertical: 16),
+    ),
+  ),
+
+
+  outlinedButtonTheme: OutlinedButtonThemeData(
+    style: OutlinedButton.styleFrom(
+      foregroundColor: AppColors.primary,
+      side: const BorderSide(color: AppColors.border),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(50)),
+      textStyle: GoogleFonts.poppins(fontSize: 14, fontWeight: FontWeight.w500),
+      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+    ),
+  ),
+
+  textButtonTheme: TextButtonThemeData(
+    style: TextButton.styleFrom(
+      foregroundColor: AppColors.primary,
+      textStyle: GoogleFonts.poppins(
+        fontSize: 13,
+        fontWeight: FontWeight.w500,
+        decoration: TextDecoration.underline,
+        decorationColor: AppColors.primary,
+      ),
+    ),
+  ),
+
+  inputDecorationTheme: InputDecorationTheme(
+    filled: true,
+    fillColor: AppColors.surfaceLight,
+    hintStyle: GoogleFonts.poppins(color: AppColors.textMuted, fontSize: 14),
+    contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+    border: OutlineInputBorder(
+      borderRadius: BorderRadius.circular(12),
+      borderSide: BorderSide.none,
+    ),
+    enabledBorder: OutlineInputBorder(
+      borderRadius: BorderRadius.circular(12),
+      borderSide: const BorderSide(color: AppColors.border, width: 0.8),
+    ),
+    focusedBorder: OutlineInputBorder(
+      borderRadius: BorderRadius.circular(12),
+      borderSide: const BorderSide(color: AppColors.primary, width: 1.5),
+    ),
+    errorBorder: OutlineInputBorder(
+      borderRadius: BorderRadius.circular(12),
+      borderSide: const BorderSide(color: AppColors.error, width: 1),
+    ),
+    focusedErrorBorder: OutlineInputBorder(
+      borderRadius: BorderRadius.circular(12),
+      borderSide: const BorderSide(color: AppColors.error, width: 1.5),
+    ),
+  ),
+
+  checkboxTheme: CheckboxThemeData(
+    fillColor: WidgetStateProperty.resolveWith((states) {
+      if (states.contains(WidgetState.selected)) return AppColors.primary;
+      return AppColors.surfaceLight; // unchecked background
+    }),
+    checkColor: WidgetStatePropertyAll(AppColors.accentText),
+    side: const BorderSide(color: AppColors.border, width: 1.5),
+    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
+    overlayColor: WidgetStatePropertyAll(AppColors.primary.withOpacity(0.1)),
+  ),
+
+  chipTheme: ChipThemeData(
+    backgroundColor: AppColors.surfaceLight,
+    selectedColor: AppColors.primary,
+    labelStyle: GoogleFonts.poppins(
+      fontSize: 13,
+      color: AppColors.textSecondary,
+    ),
+    secondaryLabelStyle: GoogleFonts.poppins(
+      fontSize: 13,
+      color: AppColors.accentText,
+    ),
+    shape: const StadiumBorder(),
+    side: const BorderSide(color: AppColors.border, width: 0.8),
+    padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
+  ),
+
+  cardTheme: CardThemeData(
+    color: AppColors.surfaceMid,
+    elevation: 0,
+    shape: RoundedRectangleBorder(
+      borderRadius: BorderRadius.circular(12),
+      side: const BorderSide(color: AppColors.border, width: 0.8),
+    ),
+    margin: EdgeInsets.zero,
+  ),
+
+  dividerTheme: const DividerThemeData(
+    color: AppColors.divider,
+    thickness: 0.8,
+    space: 0,
+  ),
+
+  iconTheme: const IconThemeData(color: AppColors.textPrimary, size: 22),
+
+  textTheme:
+      TextTheme(
+        displayLarge: AppTextStyles.displayLarge,
+        titleLarge: AppTextStyles.titleLarge,
+        bodyMedium: AppTextStyles.body,
+        bodySmall: AppTextStyles.caption,
+        labelSmall: AppTextStyles.navLabel,
+      ).apply(
+        bodyColor: AppColors.textPrimary,
+        displayColor: AppColors.textPrimary,
+      ),
+
+  fontFamily: GoogleFonts.poppins().fontFamily,
+  useMaterial3: true,
+);
