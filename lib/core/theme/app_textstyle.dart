@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'app_colors.dart';
 
 class AppTextStyles {
   static TextStyle displayLarge = GoogleFonts.poppins(
-    fontSize: 62,
+    fontSize: 35,
     fontWeight: FontWeight.w500,
-    height: 1.15,
+    letterSpacing: 0.1,
   );
 
   static TextStyle titleLarge = GoogleFonts.poppins(

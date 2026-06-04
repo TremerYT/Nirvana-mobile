@@ -2,15 +2,15 @@ import 'package:flutter/material.dart';
 
 class AppColors {
   // --- Primary Blue ---
-  static const Color primary = Color(0xFF4A90D9);       // vivid mid-blue
-  static const Color primaryLight = Color(0xFF6AAEE8);  // hover / highlight
-  static const Color primaryDark = Color(0xFF2D6BAD);   // pressed / deep
+  static const Color primary = Color(0xFF4A90D9);
+  static const Color primaryLight = Color(0xFF6AAEE8);
+  static const Color primaryDark = Color(0xFF2D6BAD);
 
   // --- Dark Backgrounds ---
-  static const Color background = Color(0xFF0D0F14);    // deepest canvas
-  static const Color surfaceDark = Color(0xFF13161E);   // base card / sheet
-  static const Color surfaceMid = Color(0xFF1A1E2A);    // elevated card
-  static const Color surfaceLight = Color(0xFF222638);  // chip / input fill
+  static const Color background = Color(0xFF0D0F14);
+  static const Color surfaceDark = Color(0xFF13161E);
+  static const Color surfaceMid = Color(0xFF1A1E2A);
+  static const Color surfaceLight = Color(0xFF222638);
 
   // --- Light Backgrounds (light theme) ---
   static const Color backgroundLight = Color(0xFFF0F2F8);
@@ -19,11 +19,11 @@ class AppColors {
   static const Color surfaceLightTint = Color(0xFFDDE3F2);
 
   // --- Text ---
-  static const Color textPrimary = Color(0xFFE8EAF2);   // bright on dark
-  static const Color textSecondary = Color(0xFF8A92B2); // subtitles / captions
-  static const Color textMuted = Color(0xFF4E566E);     // placeholders
+  static const Color textPrimary = Color(0xFFE8EAF2);
+  static const Color textSecondary = Color(0xFF8A92B2);
+  static const Color textMuted = Color(0xFF4E566E);
 
-  static const Color textPrimaryLight = Color(0xFF0D0F14);   // on light bg
+  static const Color textPrimaryLight = Color(0xFF0D0F14);
   static const Color textSecondaryLight = Color(0xFF4E566E);
 
   // --- Borders ---

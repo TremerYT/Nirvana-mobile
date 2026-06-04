@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:lottie/lottie.dart';
-import 'package:nirvana_mobile/core/theme/app_colors.dart';
-import 'package:nirvana_mobile/core/theme/app_textstyle.dart';
-import 'package:nirvana_mobile/core/widgets/custom_button.dart';
 import 'package:nirvana_mobile/core/widgets/custom_text.dart';
 import 'package:nirvana_mobile/features/auth/controller/auth_controller.dart';
 import 'package:nirvana_mobile/features/auth/widgets/custom_background.dart';
 import 'package:nirvana_mobile/features/auth/widgets/custom_form.dart';
 import 'package:sign_in_button/sign_in_button.dart';
 
-class LoginView extends GetView<AuthController> {
-  const LoginView({super.key});
+import '../../../core/theme/app_colors.dart';
+import '../../../core/theme/app_textstyle.dart';
+import '../../../core/widgets/custom_button.dart';
+
+class RegisterView extends GetView<AuthController> {
+  const RegisterView({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -24,48 +24,42 @@ class LoginView extends GetView<AuthController> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Obx(
-                  () => Align(
-                    alignment: Alignment.center,
-                    child: Lottie(
-                      composition: controller.composition.value,
-                      height: 250,
-                      fit: BoxFit.contain,
-                    ),
-                  ),
-                ),
                 CustomText(
-                  text: "Login to continue using the app",
-                  style: AppTextStyles.titleLarge,
+                  text: "Getting Started",
+                  style: AppTextStyles.displayLarge,
                 ),
                 const SizedBox(height: 10),
+                CustomText(
+                  text:
+                      "Seems like you are new here. Lets set up your profile below",
+                ),
+                const SizedBox(height: 30),
                 CustomForm(
-                  formKey: controller.loginFormKey,
-                  fields: controller.loginFormFields,
+                  formKey: controller.registerFormKey,
+                  fields: controller.registerFormFields,
                 ),
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Obx(
-                      () => Row(
-                        children: [
-                          Checkbox(
-                            value: controller.rememberMe.value,
-                            onChanged: (value) =>
-                                controller.rememberMe.value = value ?? false,
-                          ),
-                          CustomText(text: "Remember me"),
-                        ],
-                      ),
+                    Icon(
+                      Icons.info_outline,
+                      size: 13,
+                      color: AppColors.textMuted,
                     ),
-                    TextButton(
-                      onPressed: () {},
-                      child: CustomText(text: "Forgot Password?"),
+                    const SizedBox(width: 6),
+                    CustomText(
+                      text:
+                          'Your phone number will be used for delivery updates.',
+                      style: AppTextStyles.caption.copyWith(
+                        color: AppColors.textMuted,
+                      ),
                     ),
                   ],
                 ),
-                CustomButton(text: "Login", onPressed: () {}),
+                const SizedBox(height: 10),
+                CustomButton(
+                  text: "Register",
+                  onPressed: () => Get.toNamed("/verification"),
+                ),
                 const SizedBox(height: 10),
                 SizedBox(
                   width: double.infinity,
@@ -77,7 +71,7 @@ class LoginView extends GetView<AuthController> {
                       borderRadius: BorderRadiusGeometry.circular(50),
                     ),
                     onPressed: () {},
-                    text: 'Sign in with Google',
+                    text: 'Sign up with Google',
                     textStyle: GoogleFonts.poppins(
                       fontSize: 15,
                       fontWeight: FontWeight.w600,
@@ -97,7 +91,7 @@ class LoginView extends GetView<AuthController> {
                       borderRadius: BorderRadiusGeometry.circular(50),
                     ),
                     onPressed: () {},
-                    text: 'Sign in with Google',
+                    text: 'Sign up with Apple',
                     textStyle: GoogleFonts.poppins(
                       fontSize: 15,
                       fontWeight: FontWeight.w600,
@@ -110,16 +104,16 @@ class LoginView extends GetView<AuthController> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    CustomText(text: "Don't have an account?"),
+                    CustomText(text: "Already have an account?"),
                     TextButton(
-                      onPressed: () => Get.toNamed('/register'),
+                      onPressed: () => Get.toNamed('/login'),
                       style: TextButton.styleFrom(
                         padding: const EdgeInsets.only(left: 4),
                         minimumSize: Size.zero,
                         tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                       ),
                       child: CustomText(
-                        text: 'Sign up',
+                        text: 'login',
                         style: AppTextStyles.body.copyWith(
                           color: AppColors.primary,
                           fontWeight: FontWeight.w600,

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:pinput/pinput.dart';
 
 import 'app_colors.dart';
+import 'app_textstyle.dart';
 
 class AppDecorations {
   static BoxDecoration card({double radius = 12}) => BoxDecoration(
@@ -24,12 +26,10 @@ class AppDecorations {
   // Bottom CTA bar
   static final BoxDecoration bottomBar = BoxDecoration(
     color: AppColors.surfaceWhite,
-    border: const Border(
-      top: BorderSide(color: AppColors.border, width: 0.8),
-    ),
+    border: const Border(top: BorderSide(color: AppColors.border, width: 0.8)),
     boxShadow: [
       BoxShadow(
-        color: Colors.black.withAlpha(12), // 0.05 * 255 approx
+        color: Colors.black.withAlpha(12),
         blurRadius: 12,
         offset: const Offset(0, -4),
       ),
