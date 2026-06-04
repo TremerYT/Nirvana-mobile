@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:nirvana_mobile/core/theme/app_colors.dart';
 
 class CustomBackground extends StatelessWidget {
   final Widget child;
