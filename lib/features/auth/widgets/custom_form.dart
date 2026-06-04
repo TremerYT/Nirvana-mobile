@@ -34,7 +34,7 @@ class _CustomFormState extends State<CustomForm> {
           ...widget.fields.map((field) {
             final isObscured = obscureMap[field.name] ?? false;
             return Padding(
-              padding: const EdgeInsets.only(bottom: 16),
+              padding: const EdgeInsets.only(bottom: 10),
               child: FormBuilderTextField(
                 name: field.name,
                 onChanged: (value) {

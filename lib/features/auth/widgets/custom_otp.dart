@@ -13,11 +13,12 @@ class CustomOTP extends StatelessWidget {
   Widget build(BuildContext context) {
 
     return Pinput(
-      defaultPinTheme: AppPinputTheme.defaultTheme,
-      focusedPinTheme: AppPinputTheme.focusedTheme,
-      submittedPinTheme: AppPinputTheme.submittedTheme,
-      errorPinTheme: AppPinputTheme.errorTheme,
+      defaultPinTheme: AppPinputTheme.base(context),
+      focusedPinTheme: AppPinputTheme.focused(context),
+      submittedPinTheme: AppPinputTheme.submitted(context),
+      errorPinTheme: AppPinputTheme.error(context),
       onCompleted: onCompleted,
+      length: length,
     );
   }
 }

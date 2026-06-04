@@ -15,8 +15,8 @@ class CustomBackground extends StatelessWidget {
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
             colors: [
-              Theme.of(context).primaryColor,
-              Theme.of(context).scaffoldBackgroundColor,
+              Theme.of(context).colorScheme.primary,
+              Theme.of(context).colorScheme.surface,
             ],
             stops: const [0.0, 0.6],
           ),

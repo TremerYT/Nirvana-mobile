@@ -28,13 +28,13 @@ class VerificationView extends GetView<AuthController> {
               const SizedBox(height: 10),
               RichText(
                 text: TextSpan(
+                  style: Theme.of(context).textTheme.bodyMedium,
                   children: [
                     const TextSpan(text: "We have sent an OTP code to "),
                     TextSpan(
                       text: "${Get.arguments ?? 'your phone number'}",
                       style: TextStyle(color: AppColors.primary),
                     ),
-                    const TextSpan(text: " \nEnter the OTP below to verify"),
                   ],
                 ),
               ),
@@ -42,8 +42,10 @@ class VerificationView extends GetView<AuthController> {
               Center(
                 child: Column(
                   children: [
-                    CustomText(text: "Didn't reveive the verification code?"),
+                    CustomOTP(onCompleted: controller.setOtp, length: 6),
                     const SizedBox(height: 10),
+                    CustomText(text: "Didn't reveive the verification code?"),
+                    const SizedBox(height: 5),
                     Obx(
                       () => Center(
                         child: GestureDetector(
