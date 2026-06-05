@@ -66,7 +66,6 @@ class VerificationView extends GetView<AuthController> {
                   ],
                 ),
               ),
-
               Spacer(),
               Obx(
                 () => CustomButton(

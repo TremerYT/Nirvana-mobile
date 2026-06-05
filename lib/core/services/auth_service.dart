@@ -2,7 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:nirvana_mobile/core/network/api_endpoints.dart';
 import 'package:nirvana_mobile/core/network/dio_client.dart';
 
-class Authservice {
+class AuthService {
   Future<Response> register(Map<String, dynamic> data) async {
     try {
       final response = await DioClient.dio.post(
@@ -18,7 +18,7 @@ class Authservice {
   Future<Response> login(String email, String password) async {
     try {
       final response = await DioClient.dio.post(
-        ApiEndpoints.register,
+        ApiEndpoints.login,
         data: {"email": email, "password": password},
       );
       return response;
@@ -31,7 +31,7 @@ class Authservice {
     try {
       final response = await DioClient.dio.post(
         ApiEndpoints.verification,
-        data: {"phone": phone, "otp": otp},
+        data: {"phone": phone, "verificationCode": otp},
       );
       return response;
     } on DioException catch (e) {

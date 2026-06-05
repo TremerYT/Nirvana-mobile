@@ -59,6 +59,7 @@ final registerFields = [
   FormFields(
     label: "Password",
     name: "password",
+    isPassword: true,
     validators: [
       FormBuilderValidators.required(),
       FormBuilderValidators.password(),
@@ -67,6 +68,7 @@ final registerFields = [
   FormFields(
     label: "Confirm password",
     name: "confirmPassword",
+    isPassword: true,
     validators: [
       (value) {
         final formState =

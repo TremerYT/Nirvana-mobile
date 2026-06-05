@@ -56,9 +56,14 @@ class RegisterView extends GetView<AuthController> {
                   ],
                 ),
                 const SizedBox(height: 10),
-                CustomButton(
-                  text: "Register",
-                  onPressed: () => Get.toNamed("/verification"),
+                Obx(
+                  () => CustomButton(
+                    text: "Register",
+                    onPressed: controller.isLoading.value
+                        ? null
+                        : controller.register,
+                    isLoading: controller.isLoading.value,
+                  ),
                 ),
                 const SizedBox(height: 10),
                 SizedBox(

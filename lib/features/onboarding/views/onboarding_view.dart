@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
-import 'package:nirvana_mobile/core/theme/app_colors.dart';
 import 'package:nirvana_mobile/core/theme/app_textstyle.dart';
 import 'package:nirvana_mobile/core/widgets/custom_text.dart';
 

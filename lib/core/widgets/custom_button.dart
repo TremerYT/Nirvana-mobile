@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 class CustomButton extends StatelessWidget {
   final String text;
@@ -32,14 +33,21 @@ class CustomButton extends StatelessWidget {
         ),
         onPressed: isLoading ? null : onPressed,
         child: isLoading
-            ? const CircularProgressIndicator()
+            ? SizedBox(
+                width: 20,
+                height: 20,
+                child: const SpinKitRipple(
+                  color: Colors.blue,
+                  size: 20,
+                )
+              )
             : icon != null
             ? Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(text),
                   const SizedBox(width: 4),
-                  Icon(icon, size: 20),
+                  Icon(icon, size: 40),
                 ],
               )
             : Text(text),

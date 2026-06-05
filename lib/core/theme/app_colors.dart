@@ -50,4 +50,5 @@ class AppColors {
   static const Color star = Color(0xFFD4A843);
   static const Color scrim = Color(0xCC0D0F14);
   static const Color error = Color(0xFFEF4444);
+  static const Color success = Color(0xFF22C55E);
 }
