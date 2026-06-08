@@ -24,6 +24,10 @@ class RegisterView extends GetView<AuthController> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                IconButton(
+                  onPressed: () => Get.back(),
+                  icon: Icon(Icons.arrow_back_ios, size: 23),
+                ),
                 CustomText(
                   text: "Getting Started",
                   style: AppTextStyles.displayLarge,

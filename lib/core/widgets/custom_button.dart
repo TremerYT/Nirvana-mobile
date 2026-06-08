@@ -36,18 +36,19 @@ class CustomButton extends StatelessWidget {
             ? SizedBox(
                 width: 20,
                 height: 20,
-                child: const SpinKitRipple(
+                child: const SpinKitThreeBounce(
                   color: Colors.blue,
-                  size: 20,
+                  size: 10,
                 )
               )
             : icon != null
             ? Row(
                 mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Text(text),
                   const SizedBox(width: 4),
-                  Icon(icon, size: 40),
+                  Icon(icon, size: 20),
                 ],
               )
             : Text(text),

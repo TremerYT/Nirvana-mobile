@@ -15,11 +15,11 @@ class AuthService {
     }
   }
 
-  Future<Response> login(String email, String password) async {
+  Future<Response> login(Map<String, dynamic> data) async {
     try {
       final response = await DioClient.dio.post(
         ApiEndpoints.login,
-        data: {"email": email, "password": password},
+        data: data,
       );
       return response;
     } on DioException catch (e) {
@@ -27,15 +27,30 @@ class AuthService {
     }
   }
 
-  Future<Response> verifyOtp(String phone, String otp) async {
+  Future<Response> verifyOtp(Map<String, dynamic> data) async {
     try {
       final response = await DioClient.dio.post(
         ApiEndpoints.verification,
-        data: {"phone": phone, "verificationCode": otp},
+        data: data,
       );
       return response;
     } on DioException catch (e) {
       throw Exception(e.response?.data['message'] ?? 'Verification failed');
+    }
+  }
+
+  Future<Response> forgotPassword(Map<String, dynamic> data) async {
+    try {
+      final response = await DioClient.dio.post(
+        ApiEndpoints.forgotPassword,
+        data: data,
+      );
+      return response;
+    } on DioException catch (e) {
+      throw Exception(
+        e.response?.data['message'] ??
+            'Failed to send email for password reset',
+      );
     }
   }
 }

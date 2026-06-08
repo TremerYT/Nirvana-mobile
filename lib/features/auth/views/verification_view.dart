@@ -69,13 +69,9 @@ class VerificationView extends GetView<AuthController> {
               Spacer(),
               Obx(
                 () => CustomButton(
-                  text: controller.isVerified.value
-                      ? "Proceed to Login"
-                      : "Verify",
+                  text: "Verify",
                   onPressed: controller.isLoading.value
                       ? null
-                      : controller.isVerified.value
-                      ? () => Get.toNamed('/login')
                       : controller.verify,
                   isLoading: controller.isLoading.value,
                   icon: Icons.arrow_forward,

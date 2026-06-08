@@ -1,8 +1,12 @@
+import 'dart:io';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
+import 'package:nirvana_mobile/core/storage/secure_storage.dart';
 import 'package:nirvana_mobile/core/theme/app_colors.dart';
 import 'package:nirvana_mobile/features/auth/data/form_data.dart';
 
@@ -14,12 +18,14 @@ class AuthController extends GetxController {
 
   final loginFormKey = GlobalKey<FormBuilderState>();
   final registerFormKey = GlobalKey<FormBuilderState>();
+  final forgortPasswordFormKey = GlobalKey<FormBuilderState>();
 
   final composition = Rxn<LottieComposition>();
   final compositionPath = "assets/lottie/login.json";
 
   final loginFormFields = loginFields;
   final registerFormFields = registerFields;
+  final forgotPasswordFormFields = forgotPasswordFields;
 
   var rememberMe = false.obs;
   var otp = ''.obs;
@@ -27,7 +33,7 @@ class AuthController extends GetxController {
   var isLoading = false.obs;
   var isVerified = false.obs;
 
-  String? pendingPhone;
+  final phoneNumber = ''.obs;
 
   @override
   void onInit() {
@@ -40,64 +46,97 @@ class AuthController extends GetxController {
     composition.value = await LottieComposition.fromByteData(bytes);
   }
 
-  void login() {
-    if (loginFormKey.currentState?.saveAndValidate() ?? false) {
-      Get.offAllNamed("/home");
-    }
-  }
-
   Future<void> register() async {
     if (!(registerFormKey.currentState?.saveAndValidate() ?? false)) return;
 
     isLoading.value = true;
     try {
       final data = registerFormKey.currentState!.value;
-      final phoneNumber = data["phoneNumber"] as String;
+      phoneNumber.value = data["phoneNumber"];
 
       await _authService.register(data);
 
       startTimer();
-      Get.offNamed(AppRoutes.verification, arguments: phoneNumber);
-      Future.delayed(Duration(milliseconds: 300), () {
-        Get.snackbar(
-          "Registration Successful",
-          "Please verify your phone number.",
-          backgroundColor: AppColors.success,
-          snackPosition: SnackPosition.TOP,
-        );
-      });
-    } catch (e) {
-      Get.snackbar(
-        "Registration Failed",
-        e.toString().replaceFirst("Exception: ", ""),
-        snackPosition: SnackPosition.TOP,
+      Get.offNamed(
+        AppRoutes.verification,
+        arguments: data["phoneNumber"] as String,
       );
-      print(e);
+    } catch (e) {
+      Fluttertoast.showToast(
+        msg: "Failed to Register",
+        backgroundColor: AppColors.error,
+        gravity: ToastGravity.TOP,
+        toastLength: Toast.LENGTH_LONG,
+      );
     } finally {
       isLoading.value = false;
     }
   }
 
+  // Future<void> login() async{
+  //   if (!(loginFormKey.currentState?.saveAndValidate() ?? false)) {
+  //     return;
+  //   }
+  //   isLoading.value = true;
+  //   try {
+  //     final data =loginFormKey.currentState!.value;
+  //     final _tokens = await _authService.login(data);
+  //
+  //   }
+  //   catch(e) {
+  //
+  //   }
+  //
+  // }
+
   Future<void> verify() async {
     if (otp.value.length < 6) {
-      Get.snackbar(
-        "Invalid Code",
-        "Please enter the full 6-digit code.",
-        snackPosition: SnackPosition.TOP,
-        backgroundColor: AppColors.error
+      Fluttertoast.showToast(
+        msg: "Please enter a valid Otp code",
+        backgroundColor: AppColors.error,
+        gravity: ToastGravity.TOP,
+        toastLength: Toast.LENGTH_LONG,
       );
+
+      return;
     }
 
     isLoading.value = true;
     try {
-      await _authService.verifyOtp(pendingPhone ?? '', otp.value);
+      await _authService.verifyOtp({
+        "phoneNumber": phoneNumber.value,
+        "verificationCode": otp.value,
+      });
 
       isVerified.value = true;
+      Get.offAllNamed("/login");
     } catch (e) {
-      Get.snackbar(
-        "Verification Failed",
-        e.toString().replaceFirst("Exception: ", ""),
-        snackPosition: SnackPosition.TOP,
+      Fluttertoast.showToast(
+        msg: "Error verifying your number",
+        backgroundColor: AppColors.error,
+        gravity: ToastGravity.TOP,
+        toastLength: Toast.LENGTH_LONG,
+      );
+    } finally {
+      isLoading.value = false;
+    }
+  }
+
+  Future<void> forgotPassword() async {
+    if (!(forgortPasswordFormKey.currentState?.saveAndValidate() ?? false)) {
+      return;
+    }
+    isLoading.value = true;
+    try {
+      final data = forgortPasswordFormKey.currentState!.value;
+      await _authService.forgotPassword(data);
+      Get.toNamed("/verification");
+    } catch (e) {
+      Fluttertoast.showToast(
+        msg: "Something went wrong. Please try again.",
+        backgroundColor: AppColors.error,
+        gravity: ToastGravity.TOP,
+        toastLength: Toast.LENGTH_LONG,
       );
     } finally {
       isLoading.value = false;

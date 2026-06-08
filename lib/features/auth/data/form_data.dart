@@ -2,6 +2,7 @@ import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:get/get.dart';
 import 'package:nirvana_mobile/features/auth/controller/auth_controller.dart';
 import 'package:nirvana_mobile/features/auth/models/form_field.dart';
+import 'package:nirvana_mobile/features/auth/views/forgot_password.dart';
 
 final loginFields = [
   FormFields(
@@ -82,9 +83,19 @@ final registerFields = [
         if (value != password) {
           return "Passwords do not match";
         }
-
         return null;
       },
+    ],
+  ),
+];
+
+final forgotPasswordFields = [
+  FormFields(
+    label: "Email",
+    name: "email",
+    validators: [
+      FormBuilderValidators.required(),
+      FormBuilderValidators.email(),
     ],
   ),
 ];

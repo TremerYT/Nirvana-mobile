@@ -60,7 +60,7 @@ class LoginView extends GetView<AuthController> {
                       ),
                     ),
                     TextButton(
-                      onPressed: () {},
+                      onPressed: () => Get.toNamed('/forgot-password'),
                       child: CustomText(text: "Forgot Password?"),
                     ),
                   ],
