@@ -65,7 +65,15 @@ class LoginView extends GetView<AuthController> {
                     ),
                   ],
                 ),
-                CustomButton(text: "Login", onPressed: () {}),
+                Obx(
+                      () => CustomButton(
+                    text: "Login",
+                    onPressed: controller.isLoading.value
+                        ? null
+                        : controller.login,
+                    isLoading: controller.isLoading.value,
+                  ),
+                ),
                 const SizedBox(height: 10),
                 SizedBox(
                   width: double.infinity,

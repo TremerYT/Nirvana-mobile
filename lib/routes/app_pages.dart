@@ -8,6 +8,7 @@ import 'package:nirvana_mobile/features/auth/views/verification_view.dart';
 import 'package:nirvana_mobile/features/onboarding/binding/OnBoardingBinding.dart';
 import 'package:nirvana_mobile/routes/app_routes.dart';
 
+import '../features/home/views/home_view.dart';
 import '../features/onboarding/views/onboarding_view.dart';
 
 class AppPages {
@@ -42,5 +43,6 @@ class AppPages {
       page: () => ResetPasswordView(),
       binding: AuthBinding(),
     ),
+    GetPage(name: AppRoutes.home, page: () => HomeView()),
   ];
 }

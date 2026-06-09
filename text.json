@@ -1,0 +1,25 @@
+{
+  "body": {
+    "accessToken": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqZXJlbXlraW9rbzI4M0BnbWFpbC5jb20iLCJpYXQiOjE3ODA5ODE2MDQsImV4cCI6MTc4MDk4NTIwNCwiZnVsbE5hbWUiOiJKZWZmZXJ5IE11dHVrdSJ9.VHEJOOA6xYFhbWqKyggBDPlgtK01zYyt3TPk7ebL814",
+    "refreshToken": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqZXJlbXlraW9rbzI4M0BnbWFpbC5jb20iLCJpYXQiOjE3ODA5ODE2MDUsImV4cCI6MTc4MTA2ODAwNSwiZnVsbE5hbWUiOiJKZWZmZXJ5IE11dHVrdSIsInRva2VuVHlwZSI6InJlZnJlc2gifQ.uGLp936iIsm8oi_n7li_XBCggTIcfwmV01UBBwB1YcE"
+  },
+  "http": {
+    "status": 200,
+    "headers": {
+      "X-Content-Type-Options": "nosniff",
+      "X-XSS-Protection": "0",
+      "Cache-Control": "no-cache, no-store, max-age=0, must-revalidate",
+      "Pragma": "no-cache",
+      "Expires": "0",
+      "X-Frame-Options": "DENY",
+      "Content-Type": "application/json",
+      "Transfer-Encoding": "chunked",
+      "Date": "Tue, 09 Jun 2026 05:06:45 GMT",
+      "Keep-Alive": "timeout=60",
+      "Connection": "keep-alive"
+    },
+    "responseTime": 883
+  },
+  "tests": [],
+  "binary": false
+}

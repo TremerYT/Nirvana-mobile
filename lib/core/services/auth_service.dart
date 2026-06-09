@@ -39,6 +39,18 @@ class AuthService {
     }
   }
 
+  Future<Response> verifyResetOtp(Map<String, dynamic> data) async {
+    try {
+      final response = await DioClient.dio.post(
+        ApiEndpoints.resetVerification,
+        data: data,
+      );
+      return response;
+    } on DioException catch (e) {
+      throw Exception(e.response?.data['message'] ?? 'Verification failed');
+    }
+  }
+
   Future<Response> forgotPassword(Map<String, dynamic> data) async {
     try {
       final response = await DioClient.dio.post(
