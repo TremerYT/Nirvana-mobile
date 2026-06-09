@@ -5,4 +5,5 @@ class ApiEndpoints {
   static const String resetVerification = "/api/auth/verification";
   static const String resendOtp = "/api/auth/resend-verification";
   static const String forgotPassword = "/api/auth/forgot-password";
+  static const String resetPassword = "api/auth/reset-password";
 }

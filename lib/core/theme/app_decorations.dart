@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:pinput/pinput.dart';
 
 import 'app_colors.dart';
-import 'app_textstyle.dart';
 
 class AppDecorations {
   static BoxDecoration card({double radius = 12}) => BoxDecoration(

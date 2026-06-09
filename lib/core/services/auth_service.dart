@@ -17,10 +17,7 @@ class AuthService {
 
   Future<Response> login(Map<String, dynamic> data) async {
     try {
-      final response = await DioClient.dio.post(
-        ApiEndpoints.login,
-        data: data,
-      );
+      final response = await DioClient.dio.post(ApiEndpoints.login, data: data);
       return response;
     } on DioException catch (e) {
       throw Exception(e.response?.data['message'] ?? 'Login failed');
@@ -63,6 +60,19 @@ class AuthService {
         e.response?.data['message'] ??
             'Failed to send email for password reset',
       );
+    }
+  }
+
+  Future<Response> resetPassword(Map<String, dynamic> data) async {
+    try {
+      final response = await DioClient.dio.post(
+        ApiEndpoints.resetPassword,
+        data: data,
+      );
+      return response;
+    } on DioException catch (e) {
+      throw Exception(e.response?.data['message'] ?? 'Password reset failed');
+      print(e);
     }
   }
 }

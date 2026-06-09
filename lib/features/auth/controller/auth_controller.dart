@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
@@ -19,13 +17,17 @@ class AuthController extends GetxController {
   final loginFormKey = GlobalKey<FormBuilderState>();
   final registerFormKey = GlobalKey<FormBuilderState>();
   final forgortPasswordFormKey = GlobalKey<FormBuilderState>();
+  final resetFormKey = GlobalKey<FormBuilderState>();
+  final resetPasswordFormKey = GlobalKey<FormBuilderState>();
 
   final composition = Rxn<LottieComposition>();
   final compositionPath = "assets/lottie/login.json";
 
   final loginFormFields = loginFields;
   final registerFormFields = registerFields;
-  final forgotPasswordFormFields = forgotPasswordFields;
+  final resetPasswordFormFields = resetPasswordFields;
+  final resetFieldsPhone = resetPhoneFields;
+  final resetFieldsEmail = resetEmailFields;
 
   var rememberMe = false.obs;
   var otp = ''.obs;
@@ -33,6 +35,7 @@ class AuthController extends GetxController {
   var isLoading = false.obs;
   var isVerified = false.obs;
   var reset = false.obs;
+  var resetInput = "".obs;
 
   final phoneNumber = ''.obs;
   final email = "".obs;
@@ -67,8 +70,7 @@ class AuthController extends GetxController {
       Fluttertoast.showToast(
         msg: "Failed to Register",
         backgroundColor: AppColors.error,
-        gravity: ToastGravity.TOP,
-        toastLength: Toast.LENGTH_LONG,
+        toastLength: Toast.LENGTH_SHORT,
       );
     } finally {
       isLoading.value = false;
@@ -94,7 +96,10 @@ class AuthController extends GetxController {
       await SecureStorage.setRefreshToken(refreshToken);
       Get.offAllNamed(AppRoutes.home);
     } catch (e) {
-      Fluttertoast.showToast(msg: "Error trying to login");
+      Fluttertoast.showToast(
+        msg: "Error trying to login",
+        backgroundColor: AppColors.error,
+      );
     } finally {
       isLoading.value = false;
     }
@@ -135,8 +140,6 @@ class AuthController extends GetxController {
       Fluttertoast.showToast(
         msg: "Error verifying your number",
         backgroundColor: AppColors.error,
-        gravity: ToastGravity.TOP,
-        toastLength: Toast.LENGTH_LONG,
       );
     } finally {
       isLoading.value = false;
@@ -166,6 +169,10 @@ class AuthController extends GetxController {
     } finally {
       isLoading.value = false;
     }
+  }
+
+  Future<void> requestOtp() async {
+
   }
 
   void setOtp(String code) {

@@ -49,7 +49,7 @@ final ThemeData lightTheme = ThemeData(
       backgroundColor: AppColors.primary,
       foregroundColor: AppColors.accentText,
       elevation: 0,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(50)),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
       textStyle: GoogleFonts.poppins(
         fontSize: 15,
         fontWeight: FontWeight.w600,

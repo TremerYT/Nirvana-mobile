@@ -5,6 +5,8 @@ class AppRoutes {
   static const verification = "/verification";
   static const forgotPassword = "/forgot-password";
   static const resetPassword = "/resetPassword";
+  static const resetInput = "/reset-input";
+  static const verificationOptions = "/verificationOptions";
 
   static const home = "/home";
 }

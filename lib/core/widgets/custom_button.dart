@@ -36,10 +36,7 @@ class CustomButton extends StatelessWidget {
             ? SizedBox(
                 width: 20,
                 height: 20,
-                child: const SpinKitThreeBounce(
-                  color: Colors.blue,
-                  size: 10,
-                )
+                child: const SpinKitThreeBounce(color: Colors.blue, size: 10),
               )
             : icon != null
             ? Row(

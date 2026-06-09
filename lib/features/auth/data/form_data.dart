@@ -1,8 +1,8 @@
+import 'package:flutter/material.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:get/get.dart';
 import 'package:nirvana_mobile/features/auth/controller/auth_controller.dart';
 import 'package:nirvana_mobile/features/auth/models/form_field.dart';
-import 'package:nirvana_mobile/features/auth/views/forgot_password.dart';
 
 final loginFields = [
   FormFields(
@@ -89,13 +89,59 @@ final registerFields = [
   ),
 ];
 
-final forgotPasswordFields = [
+final resetPhoneFields = [
   FormFields(
-    label: "Email",
+    name: "phone",
+    label: "Phone Number",
+    keyboardType: TextInputType.phone,
+    validators: [
+      FormBuilderValidators.required(),
+      FormBuilderValidators.minLength(10),
+    ],
+  ),
+];
+
+final resetEmailFields = [
+  FormFields(
     name: "email",
+    label: "Email Address",
+    keyboardType: TextInputType.emailAddress,
     validators: [
       FormBuilderValidators.required(),
       FormBuilderValidators.email(),
+    ],
+  ),
+];
+
+final resetPasswordFields = [
+  FormFields(
+    label: "Password",
+    name: "password",
+    isPassword: true,
+    validators: [
+      FormBuilderValidators.required(),
+      FormBuilderValidators.password(),
+    ],
+  ),
+  FormFields(
+    label: "Confirm password",
+    name: "confirmPassword",
+    isPassword: true,
+    validators: [
+      (value) {
+        final formState =
+            Get.find<AuthController>().registerFormKey.currentState;
+        final password = formState?.fields['password']?.value;
+
+        if (value == null || value.isEmpty) {
+          return "Please confirm your password";
+        }
+
+        if (value != password) {
+          return "Passwords do not match";
+        }
+        return null;
+      },
     ],
   ),
 ];

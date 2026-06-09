@@ -37,6 +37,7 @@ class _CustomFormState extends State<CustomForm> {
               padding: const EdgeInsets.only(bottom: 10),
               child: FormBuilderTextField(
                 name: field.name,
+                keyboardType: field.keyboardType,
                 onChanged: (value) {
                   if (field.name == "password") {
                     widget.formKey.currentState?.fields["confirmPassword"]

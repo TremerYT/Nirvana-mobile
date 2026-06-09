@@ -50,7 +50,7 @@ final ThemeData darkTheme = ThemeData(
       foregroundColor: AppColors.accentText,
       elevation: 0,
       shadowColor: AppColors.primary,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(50)),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
       textStyle: GoogleFonts.poppins(
         fontSize: 15,
         fontWeight: FontWeight.w600,
