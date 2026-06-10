@@ -71,17 +71,20 @@ final registerFields = [
     name: "confirmPassword",
     isPassword: true,
     validators: [
+      FormBuilderValidators.required(),
       (value) {
-        final formState =
-            Get.find<AuthController>().registerFormKey.currentState;
-        final password = formState?.fields['password']?.value;
+        try {
+          final formState =
+              Get.find<AuthController>().registerFormKey.currentState;
+          if (formState == null) return null;
 
-        if (value == null || value.isEmpty) {
-          return "Please confirm your password";
-        }
+          final passwordValue = formState.value['password'];
 
-        if (value != password) {
-          return "Passwords do not match";
+          if (value != passwordValue) {
+            return "Passwords do not match";
+          }
+        } catch (e) {
+          print('Error comparing passwords: $e');
         }
         return null;
       },
@@ -91,7 +94,7 @@ final registerFields = [
 
 final resetPhoneFields = [
   FormFields(
-    name: "phone",
+    name: "phoneNumber",
     label: "Phone Number",
     keyboardType: TextInputType.phone,
     validators: [
@@ -128,17 +131,20 @@ final resetPasswordFields = [
     name: "confirmPassword",
     isPassword: true,
     validators: [
+      FormBuilderValidators.required(),
       (value) {
-        final formState =
-            Get.find<AuthController>().registerFormKey.currentState;
-        final password = formState?.fields['password']?.value;
+        try {
+          final formState =
+              Get.find<AuthController>().resetPasswordFormKey.currentState;
+          if (formState == null) return null;
 
-        if (value == null || value.isEmpty) {
-          return "Please confirm your password";
-        }
+          final passwordValue = formState.value['password'];
 
-        if (value != password) {
-          return "Passwords do not match";
+          if (value != passwordValue) {
+            return "Passwords do not match";
+          }
+        } catch (e) {
+          print('Error comparing passwords: $e');
         }
         return null;
       },

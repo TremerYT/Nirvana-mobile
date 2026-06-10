@@ -1,5 +1,4 @@
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
@@ -40,31 +39,27 @@ class AuthController extends GetxController {
   final phoneNumber = ''.obs;
   final email = "".obs;
 
-  @override
-  void onInit() {
-    super.onInit();
-    _preLoadLottie();
-  }
-
-  void _preLoadLottie() async {
-    final bytes = await rootBundle.load(compositionPath);
-    composition.value = await LottieComposition.fromByteData(bytes);
-  }
-
   Future<void> register() async {
     if (!(registerFormKey.currentState?.saveAndValidate() ?? false)) return;
 
     isLoading.value = true;
     try {
       final data = registerFormKey.currentState!.value;
-      phoneNumber.value = data["phoneNumber"];
+      final payload = {
+        "fullName": data["fullName"],
+        "email": data["email"],
+        "nationalID": data["nationalID"],
+        "phoneNumber": data["phoneNumber"],
+        "password": data["password"],
+        "purpose": "REGISTER",
+      };
 
-      await _authService.register(data);
-
+      await _authService.register(payload);
       startTimer();
+
       Get.offNamed(
         AppRoutes.verification,
-        arguments: data["phoneNumber"] as String,
+        arguments: {"purpose": "REGISTRATION", "phone": data["phoneNumber"]},
       );
     } catch (e) {
       Fluttertoast.showToast(
@@ -132,15 +127,15 @@ class AuthController extends GetxController {
       if (args["purpose"] == "VERIFICATION") {
         final resetToken = response.data["resetToken"];
         Get.offAllNamed(
-          "/reset-password",
+          AppRoutes.resetPassword,
           arguments: {"resetToken": resetToken},
         );
       } else {
-        Get.offAllNamed("/login");
+        Get.offAllNamed(AppRoutes.login);
       }
     } catch (e) {
       Fluttertoast.showToast(
-        msg: "Error verifying your code",
+        msg: "Error verifying your otp",
         backgroundColor: AppColors.error,
       );
     } finally {
@@ -178,6 +173,7 @@ class AuthController extends GetxController {
     }
     isLoading.value = true;
     try {
+      print("Hello");
       final data = resetPasswordFormKey.currentState!.value;
       final args = Get.arguments as Map<String, dynamic>;
       final payload = {
@@ -185,6 +181,13 @@ class AuthController extends GetxController {
         "newPassword": data["password"],
       };
       await _authService.resetPassword(payload);
+      Fluttertoast.showToast(
+        msg: "Password Reset Successfully",
+        toastLength: Toast.LENGTH_LONG,
+        backgroundColor: AppColors.success,
+        gravity: ToastGravity.TOP,
+      );
+      Get.offAllNamed(AppRoutes.login);
     } catch (e) {
       Fluttertoast.showToast(msg: "Failed to set new password");
     } finally {
@@ -197,8 +200,8 @@ class AuthController extends GetxController {
   }
 
   void startTimer() {
+    seconds.value = 60;
     Future.doWhile(() async {
-      seconds.value = 60;
       await Future.delayed(Duration(seconds: 1));
       if (seconds.value > 0) {
         seconds.value--;

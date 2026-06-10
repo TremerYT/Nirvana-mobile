@@ -26,20 +26,16 @@ class RegisterView extends GetView<AuthController> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  IconButton(
-                    onPressed: () => Get.back(),
-                    icon: Icon(Icons.arrow_back_ios, size: 23),
-                  ),
                   CustomText(
                     text: "Getting Started",
                     style: AppTextStyles.displayLarge,
                   ),
-                  const SizedBox(height: 10),
+                  const SizedBox(height: 5),
                   CustomText(
                     text:
                         "Seems like you are new here. Lets set up your profile below",
                   ),
-                  const SizedBox(height: 30),
+                  const SizedBox(height: 5),
                   CustomForm(
                     formKey: controller.registerFormKey,
                     fields: controller.registerFormFields,
@@ -77,9 +73,9 @@ class RegisterView extends GetView<AuthController> {
                     height: 52,
                     child: SignInButton(
                       Buttons.google,
-                      elevation: 0,
+                      elevation: 0.3,
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadiusGeometry.circular(50),
+                        borderRadius: BorderRadiusGeometry.circular(12),
                       ),
                       onPressed: () {},
                       text: 'Sign up with Google',
@@ -99,7 +95,7 @@ class RegisterView extends GetView<AuthController> {
                       Buttons.appleDark,
                       elevation: 0,
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadiusGeometry.circular(50),
+                        borderRadius: BorderRadiusGeometry.circular(12),
                       ),
                       onPressed: () {},
                       text: 'Sign up with Apple',

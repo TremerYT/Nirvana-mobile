@@ -22,10 +22,6 @@ class ResetInputView extends GetView<AuthController> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              IconButton(
-                onPressed: () => Get.back(),
-                icon: Icon(Icons.arrow_back_ios_new, size: 23),
-              ),
               CustomText(
                 text: type == "phone"
                     ? "Enter your phone number"
@@ -49,7 +45,6 @@ class ResetInputView extends GetView<AuthController> {
                   formKey: controller.resetFormKey,
                   fields: controller.resetFieldsEmail,
                 ),
-              const SizedBox(height: 10),
               Obx(
                 () => CustomButton(
                   text: "Send Code",

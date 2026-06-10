@@ -17,7 +17,6 @@ class LoginView extends GetView<AuthController> {
 
   @override
   Widget build(BuildContext context) {
-
     return GestureDetector(
       onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
       child: Scaffold(
@@ -28,14 +27,12 @@ class LoginView extends GetView<AuthController> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Obx(
-                    () => Align(
-                      alignment: Alignment.center,
-                      child: Lottie(
-                        composition: controller.composition.value,
-                        height: 250,
-                        fit: BoxFit.contain,
-                      ),
+                  Align(
+                    alignment: Alignment.center,
+                    child: Lottie.asset(
+                      'assets/lottie/login.json',
+                      height: 250,
+                      fit: BoxFit.contain,
                     ),
                   ),
                   CustomText(
@@ -64,13 +61,14 @@ class LoginView extends GetView<AuthController> {
                         ),
                       ),
                       TextButton(
-                        onPressed: () => Get.toNamed(AppRoutes.verificationOptions),
+                        onPressed: () =>
+                            Get.toNamed(AppRoutes.verificationOptions),
                         child: CustomText(text: "Forgot Password?"),
                       ),
                     ],
                   ),
                   Obx(
-                        () => CustomButton(
+                    () => CustomButton(
                       text: "Login",
                       onPressed: controller.isLoading.value
                           ? null
@@ -109,7 +107,7 @@ class LoginView extends GetView<AuthController> {
                         borderRadius: BorderRadiusGeometry.circular(12),
                       ),
                       onPressed: () {},
-                      text: 'Sign in with Google',
+                      text: 'Sign in with Apple',
                       textStyle: GoogleFonts.poppins(
                         fontSize: 15,
                         fontWeight: FontWeight.w600,

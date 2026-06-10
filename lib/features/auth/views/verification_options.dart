@@ -20,11 +20,6 @@ class VerificationOptions extends GetView<AuthController> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              IconButton(
-                onPressed: () => Get.back(),
-                icon: Icon(Icons.arrow_back_ios_new, size: 23),
-              ),
-
               CustomText(
                 text: "Verification options",
                 style: AppTextStyles.titleLarge,

@@ -32,7 +32,10 @@ class VerificationView extends GetView<AuthController> {
                   children: [
                     const TextSpan(text: "We have sent an OTP code to "),
                     TextSpan(
-                      text: "${Get.arguments ?? 'your phone number'}",
+                      text:
+                          (Get.arguments as Map<String, dynamic>?)?["phone"] ??
+                          (Get.arguments as Map<String, dynamic>?)?["email"] ??
+                          "your contact",
                       style: TextStyle(color: AppColors.primary),
                     ),
                   ],
