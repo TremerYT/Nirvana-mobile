@@ -49,13 +49,13 @@ class ResetInputView extends GetView<AuthController> {
                   formKey: controller.resetFormKey,
                   fields: controller.resetFieldsEmail,
                 ),
-              const SizedBox(height: 20),
+              const SizedBox(height: 10),
               Obx(
-                    () => CustomButton(
+                () => CustomButton(
                   text: "Send Code",
                   onPressed: controller.isLoading.value
                       ? null
-                      : () => controller.requestOtp,
+                      : () => controller.requestOtp(type),
                   isLoading: controller.isLoading.value,
                 ),
               ),

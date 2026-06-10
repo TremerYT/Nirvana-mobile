@@ -117,28 +117,30 @@ class AuthController extends GetxController {
     }
     isLoading.value = true;
     try {
-      if (reset.value) {
-        await _authService.verifyResetOtp({
-          "email": email.value,
-          "verificationCode": otp.value,
-        });
-      } else {
-        await _authService.verifyOtp({
-          "phoneNumber": phoneNumber.value,
-          "verificationCode": otp.value,
-        });
-      }
+      final args = Get.arguments as Map<String, dynamic>;
+      final payload = {
+        "otp": otp.value,
+        "purpose": args["purpose"],
+        if (args["phone"] != null)
+          "phoneNumber": args["phone"]
+        else
+          "email": args["email"],
+      };
 
-      isVerified.value = true;
-      if (reset.value) {
-        Get.offAllNamed("/reset-password");
-        reset.value = false;
+      final response = await _authService.verifyOtp(payload);
+
+      if (args["purpose"] == "VERIFICATION") {
+        final resetToken = response.data["resetToken"];
+        Get.offAllNamed(
+          "/reset-password",
+          arguments: {"resetToken": resetToken},
+        );
       } else {
         Get.offAllNamed("/login");
       }
     } catch (e) {
       Fluttertoast.showToast(
-        msg: "Error verifying your number",
+        msg: "Error verifying your code",
         backgroundColor: AppColors.error,
       );
     } finally {
@@ -146,33 +148,48 @@ class AuthController extends GetxController {
     }
   }
 
-  Future<void> forgotPassword() async {
-    if (!(forgortPasswordFormKey.currentState?.saveAndValidate() ?? false)) {
+  Future<void> requestOtp(String type) async {
+    if (!(resetFormKey.currentState?.saveAndValidate() ?? false)) {
       return;
     }
     isLoading.value = true;
     try {
-      reset.value = true;
-      final data = forgortPasswordFormKey.currentState!.value;
-      email.value = data["email"];
-
-      await _authService.forgotPassword(data);
+      final data = resetFormKey.currentState!.value;
+      final payload = {
+        "purpose": "VERIFICATION",
+        if (type == "phone")
+          "phone": data["phoneNumber"]
+        else
+          "email": data["email"],
+      };
+      await _authService.requestOtp(payload);
       startTimer();
-      Get.toNamed("/verification", arguments: data["email"] as String);
+      Get.toNamed("/verification", arguments: payload);
     } catch (e) {
-      Fluttertoast.showToast(
-        msg: "Something went wrong. Please try again.",
-        backgroundColor: AppColors.error,
-        gravity: ToastGravity.TOP,
-        toastLength: Toast.LENGTH_LONG,
-      );
+      Fluttertoast.showToast(msg: "Failed");
     } finally {
       isLoading.value = false;
     }
   }
 
-  Future<void> requestOtp() async {
-
+  Future<void> resetPassword() async {
+    if (!(resetPasswordFormKey.currentState?.saveAndValidate() ?? false)) {
+      return;
+    }
+    isLoading.value = true;
+    try {
+      final data = resetPasswordFormKey.currentState!.value;
+      final args = Get.arguments as Map<String, dynamic>;
+      final payload = {
+        "resetToken": args["resetToken"],
+        "newPassword": data["password"],
+      };
+      await _authService.resetPassword(payload);
+    } catch (e) {
+      Fluttertoast.showToast(msg: "Failed to set new password");
+    } finally {
+      isLoading.value = false;
+    }
   }
 
   void setOtp(String code) {

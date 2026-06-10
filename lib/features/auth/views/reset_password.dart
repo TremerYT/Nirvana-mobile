@@ -36,15 +36,15 @@ class ResetPasswordView extends GetView<AuthController> {
                   fields: controller.resetPasswordFormFields,
                 ),
                 const SizedBox(height: 10),
-                Obx(
-                  () => CustomButton(
-                    text: "Reset Password",
-                    onPressed: controller.isLoading.value
-                        ? null
-                        : controller.requestOtp,
-                    isLoading: controller.isLoading.value,
-                  ),
-                ),
+                // Obx(
+                //   () => CustomButton(
+                //     text: "Reset Password",
+                //     onPressed: controller.isLoading.value
+                //         ? null
+                //         : controller.re,
+                //     isLoading: controller.isLoading.value,
+                //   ),
+                // ),
               ],
             ),
           ),

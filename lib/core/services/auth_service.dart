@@ -24,6 +24,18 @@ class AuthService {
     }
   }
 
+  Future<Response> requestOtp(Map<String, dynamic> data) async {
+    try {
+      final response = await DioClient.dio.post(
+        ApiEndpoints.requestOtp,
+          data: data,
+      );
+      return response;
+    } on DioException catch (e) {
+      throw Exception(e.response?.data['message'] ?? 'OTP request failed');
+    }
+  }
+
   Future<Response> verifyOtp(Map<String, dynamic> data) async {
     try {
       final response = await DioClient.dio.post(
@@ -36,33 +48,6 @@ class AuthService {
     }
   }
 
-  Future<Response> verifyResetOtp(Map<String, dynamic> data) async {
-    try {
-      final response = await DioClient.dio.post(
-        ApiEndpoints.resetVerification,
-        data: data,
-      );
-      return response;
-    } on DioException catch (e) {
-      throw Exception(e.response?.data['message'] ?? 'Verification failed');
-    }
-  }
-
-  Future<Response> forgotPassword(Map<String, dynamic> data) async {
-    try {
-      final response = await DioClient.dio.post(
-        ApiEndpoints.forgotPassword,
-        data: data,
-      );
-      return response;
-    } on DioException catch (e) {
-      throw Exception(
-        e.response?.data['message'] ??
-            'Failed to send email for password reset',
-      );
-    }
-  }
-
   Future<Response> resetPassword(Map<String, dynamic> data) async {
     try {
       final response = await DioClient.dio.post(
@@ -72,7 +57,6 @@ class AuthService {
       return response;
     } on DioException catch (e) {
       throw Exception(e.response?.data['message'] ?? 'Password reset failed');
-      print(e);
     }
   }
 }
