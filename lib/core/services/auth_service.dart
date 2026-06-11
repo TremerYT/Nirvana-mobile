@@ -24,11 +24,19 @@ class AuthService {
     }
   }
 
+  Future<void> logout() async {
+    try {
+      await DioClient.dio.post(ApiEndpoints.logout);
+    } on DioException catch (e) {
+      throw Exception(e.response?.data['message'] ?? 'Logout failed');
+    }
+  }
+
   Future<Response> requestOtp(Map<String, dynamic> data) async {
     try {
       final response = await DioClient.dio.post(
         ApiEndpoints.requestOtp,
-          data: data,
+        data: data,
       );
       return response;
     } on DioException catch (e) {
@@ -57,6 +65,18 @@ class AuthService {
       return response;
     } on DioException catch (e) {
       throw Exception(e.response?.data['message'] ?? 'Password reset failed');
+    }
+  }
+
+  Future<Response> refreshToken() async {
+    try {
+      final response = await DioClient.dio.post(
+        ApiEndpoints.refreshToken,
+        data: {"refreshToken": refreshToken},
+      );
+      return response;
+    } on DioException catch (e) {
+      throw Exception(e.response?.data['message'] ?? 'Token refresh failed');
     }
   }
 }

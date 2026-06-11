@@ -33,7 +33,8 @@ class VerificationView extends GetView<AuthController> {
                     const TextSpan(text: "We have sent an OTP code to "),
                     TextSpan(
                       text:
-                          (Get.arguments as Map<String, dynamic>?)?["phone"] ??
+                          (Get.arguments
+                              as Map<String, dynamic>?)?["phoneNumber"] ??
                           (Get.arguments as Map<String, dynamic>?)?["email"] ??
                           "your contact",
                       style: TextStyle(color: AppColors.primary),
@@ -52,7 +53,9 @@ class VerificationView extends GetView<AuthController> {
                     Obx(
                       () => Center(
                         child: GestureDetector(
-                          onTap: controller.seconds.value > 0 ? null : () {},
+                          onTap: controller.seconds.value > 0
+                              ? null
+                              : () => controller.requestOtp,
                           child: CustomText(
                             text: controller.seconds.value > 0
                                 ? "You can resend code in ${controller.seconds.value}s"

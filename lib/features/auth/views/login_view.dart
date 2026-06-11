@@ -44,29 +44,15 @@ class LoginView extends GetView<AuthController> {
                     formKey: controller.loginFormKey,
                     fields: controller.loginFormFields,
                   ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Obx(
-                        () => Row(
-                          children: [
-                            Checkbox(
-                              value: controller.rememberMe.value,
-                              onChanged: (value) =>
-                                  controller.rememberMe.value = value ?? false,
-                            ),
-                            CustomText(text: "Remember me"),
-                          ],
-                        ),
-                      ),
-                      TextButton(
-                        onPressed: () =>
-                            Get.toNamed(AppRoutes.verificationOptions),
-                        child: CustomText(text: "Forgot Password?"),
-                      ),
-                    ],
+
+                  Align(
+                    alignment: AlignmentGeometry.centerEnd,
+                    child: TextButton(
+                      onPressed: () => Get.toNamed(AppRoutes.verificationOptions),
+                      child: CustomText(text: "Forgot Password?"),
+                    ),
                   ),
+
                   Obx(
                     () => CustomButton(
                       text: "Login",

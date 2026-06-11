@@ -2,21 +2,34 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 class SecureStorage {
   static const _storage = FlutterSecureStorage();
-  static const _tokenKey = "accessToken";
+  static const _accessTokenKey = "accessToken";
+  static const _refreshTokenKey = "refreshToken";
 
   static Future<void> setAccessToken(String token) async {
-    await _storage.write(key: "accessToken", value: token);
+    await _storage.write(key: _accessTokenKey, value: token);
   }
 
   static Future<void> setRefreshToken(String token) async {
-    await _storage.write(key: "refreshToken", value: token);
+    await _storage.write(key: _refreshTokenKey, value: token);
   }
 
-  static Future<String?> getToken() async {
-    return await _storage.read(key: _tokenKey);
+  static Future<String?> getAccessToken() async {
+    return await _storage.read(key: _accessTokenKey);
   }
 
-  static Future<void> deleteToken() async {
-    await _storage.delete(key: _tokenKey);
+  static Future<String?> getRefreshToken() async {
+    return await _storage.read(key: _refreshTokenKey);
+  }
+
+  static Future<void> deleteAccessToken() async {
+    await _storage.delete(key: _accessTokenKey);
+  }
+
+  static Future<void> deleteRefreshToken() async {
+    await _storage.delete(key: _refreshTokenKey);
+  }
+
+  static Future<void> clearAll() async {
+    await _storage.deleteAll();
   }
 }

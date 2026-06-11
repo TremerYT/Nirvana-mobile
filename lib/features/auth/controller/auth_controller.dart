@@ -63,9 +63,10 @@ class AuthController extends GetxController {
       );
     } catch (e) {
       Fluttertoast.showToast(
-        msg: "Failed to Register",
+        msg: e.toString().replaceFirst('Exception: ', ''),
         backgroundColor: AppColors.error,
-        toastLength: Toast.LENGTH_SHORT,
+        toastLength: Toast.LENGTH_LONG,
+        gravity: ToastGravity.TOP,
       );
     } finally {
       isLoading.value = false;
@@ -92,11 +93,25 @@ class AuthController extends GetxController {
       Get.offAllNamed(AppRoutes.home);
     } catch (e) {
       Fluttertoast.showToast(
-        msg: "Error trying to login",
+        msg: e.toString().replaceFirst('Exception: ', ''),
         backgroundColor: AppColors.error,
+        toastLength: Toast.LENGTH_LONG,
+        gravity: ToastGravity.TOP,
       );
     } finally {
       isLoading.value = false;
+    }
+  }
+
+  Future<void> logout() async {
+    try {
+      await _authService.logout();
+    } catch (e) {
+      //
+    } finally {
+      await SecureStorage.clearAll();
+      isLoading.value = false;
+      Get.offAllNamed(AppRoutes.login);
     }
   }
 
@@ -123,7 +138,12 @@ class AuthController extends GetxController {
       };
 
       final response = await _authService.verifyOtp(payload);
-
+      Fluttertoast.showToast(
+        msg: "Verification successfull",
+        backgroundColor: AppColors.success,
+        gravity: ToastGravity.TOP,
+        toastLength: Toast.LENGTH_LONG,
+      );
       if (args["purpose"] == "VERIFICATION") {
         final resetToken = response.data["resetToken"];
         Get.offAllNamed(
@@ -135,8 +155,9 @@ class AuthController extends GetxController {
       }
     } catch (e) {
       Fluttertoast.showToast(
-        msg: "Error verifying your otp",
+        msg: e.toString().replaceFirst('Exception: ', ''),
         backgroundColor: AppColors.error,
+        gravity: ToastGravity.TOP,
       );
     } finally {
       isLoading.value = false;
@@ -153,15 +174,25 @@ class AuthController extends GetxController {
       final payload = {
         "purpose": "VERIFICATION",
         if (type == "phone")
-          "phone": data["phoneNumber"]
+          "phoneNumber": data["phoneNumber"]
         else
           "email": data["email"],
       };
       await _authService.requestOtp(payload);
       startTimer();
+      Fluttertoast.showToast(
+        msg: "OTP sent. Please verify your email or phone number",
+        backgroundColor: AppColors.success,
+        gravity: ToastGravity.TOP,
+        toastLength: Toast.LENGTH_LONG,
+      );
       Get.toNamed("/verification", arguments: payload);
     } catch (e) {
-      Fluttertoast.showToast(msg: "Failed");
+      Fluttertoast.showToast(
+        msg: e.toString().replaceFirst('Exception: ', ''),
+        backgroundColor: AppColors.error,
+        gravity: ToastGravity.TOP,
+      );
     } finally {
       isLoading.value = false;
     }
@@ -173,7 +204,6 @@ class AuthController extends GetxController {
     }
     isLoading.value = true;
     try {
-      print("Hello");
       final data = resetPasswordFormKey.currentState!.value;
       final args = Get.arguments as Map<String, dynamic>;
       final payload = {
@@ -182,14 +212,18 @@ class AuthController extends GetxController {
       };
       await _authService.resetPassword(payload);
       Fluttertoast.showToast(
-        msg: "Password Reset Successfully",
+        msg: "Password reset Successfully",
         toastLength: Toast.LENGTH_LONG,
         backgroundColor: AppColors.success,
         gravity: ToastGravity.TOP,
       );
       Get.offAllNamed(AppRoutes.login);
     } catch (e) {
-      Fluttertoast.showToast(msg: "Failed to set new password");
+      Fluttertoast.showToast(
+        msg: e.toString().replaceFirst('Exception: ', ''),
+        backgroundColor: AppColors.error,
+        gravity: ToastGravity.TOP,
+      );
     } finally {
       isLoading.value = false;
     }
