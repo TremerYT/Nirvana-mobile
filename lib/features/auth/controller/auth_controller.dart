@@ -62,6 +62,7 @@ class AuthController extends GetxController {
         arguments: {"purpose": "REGISTRATION", "phone": data["phoneNumber"]},
       );
     } catch (e) {
+      print(e);
       Fluttertoast.showToast(
         msg: e.toString().replaceFirst('Exception: ', ''),
         backgroundColor: AppColors.error,
@@ -139,7 +140,7 @@ class AuthController extends GetxController {
 
       final response = await _authService.verifyOtp(payload);
       Fluttertoast.showToast(
-        msg: "Verification successfull",
+        msg: "Verification successful",
         backgroundColor: AppColors.success,
         gravity: ToastGravity.TOP,
         toastLength: Toast.LENGTH_LONG,

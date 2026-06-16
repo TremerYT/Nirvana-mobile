@@ -9,7 +9,7 @@ import 'package:nirvana_mobile/routes/app_routes.dart';
 
 import '../features/auth/views/reset_input.dart';
 import '../features/auth/views/verification_options.dart';
-import '../features/home/views/home_view.dart';
+import '../features/business/views/home_view.dart';
 import '../features/onboarding/views/onboarding_view.dart';
 
 class AppPages {

@@ -7,4 +7,9 @@ class ApiEndpoints {
   static const String requestOtp = "/api/auth/request-otp";
   static const String resetPassword = "/api/auth/reset-password";
   static const String refreshToken = "/api/auth/refresh-token";
+
+  static const String businessById = "/api/business";
+  static const String featuredBusinesses = "/api/business/featured";
+  static const String businessBySearch = "/api/business/search";
+  static const String businessByCategory = "/api/business/category";
 }
