@@ -1,8 +1,10 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:nirvana_mobile/core/services/business_service.dart';
+import 'package:nirvana_mobile/core/theme/app_colors.dart';
 import 'package:nirvana_mobile/features/business/models/business_model.dart';
 
 class BusinessController extends GetxController {
@@ -29,7 +31,7 @@ class BusinessController extends GetxController {
   var searchQuery = ''.obs;
   var hasError = false.obs;
 
-  Timer? _debounceTimer;
+  Timer? _searchDebounce;
 
   final searchController = TextEditingController();
 
@@ -141,7 +143,35 @@ class BusinessController extends GetxController {
       return;
     }
 
-    
+    _searchDebounce?.cancel();
+
+    _searchDebounce = Timer(const Duration(milliseconds: 500), () async {
+      searchPage = 0;
+      hasMoreSearch.value = true;
+      searchResults.clear();
+      isLoadingSearch.value = true;
+
+      try {
+        final results = await _businessService.getBusinessBySearch(
+          query: query,
+          page: searchPage,
+        );
+        if (results.isEmpty) {
+          hasMoreSearch.value = false;
+        } else {
+          searchResults.addAll(results);
+          searchPage++;
+        }
+      } catch (e) {
+          Fluttertoast.showToast(
+          msg: e.toString().replaceFirst('Exception: ', ''),
+          backgroundColor: AppColors.error,
+          gravity: ToastGravity.TOP,
+        );
+      } finally {
+        isLoadingSearch.value = false;
+      }
+    });
   }
 
   void clearSearch() {
