@@ -22,6 +22,11 @@ class ResetInputView extends GetView<AuthController> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              GestureDetector(
+                onTap: Get.back,
+                child: Icon(Icons.arrow_back, size: 30),
+              ),
+              const SizedBox(height: 10),
               CustomText(
                 text: type == "phone"
                     ? "Enter your phone number"
@@ -45,6 +50,7 @@ class ResetInputView extends GetView<AuthController> {
                   formKey: controller.resetFormKey,
                   fields: controller.resetFieldsEmail,
                 ),
+              const SizedBox(height: 10),
               Obx(
                 () => CustomButton(
                   text: "Send Code",

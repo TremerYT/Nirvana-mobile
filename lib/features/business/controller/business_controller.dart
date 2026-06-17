@@ -34,6 +34,7 @@ class BusinessController extends GetxController {
   Timer? _searchDebounce;
 
   final searchController = TextEditingController();
+  final scrollController = ScrollController();
 
   final categories = [
     'ALL',
@@ -49,13 +50,22 @@ class BusinessController extends GetxController {
   @override
   void onInit() {
     super.onInit();
+    scrollController.addListener(_onScroll);
     loadInitialData();
   }
 
   @override
   void onClose() {
     searchController.dispose();
+    scrollController.dispose();
     super.onClose();
+  }
+
+  void _onScroll() {
+    if (scrollController.position.pixels >=
+        scrollController.position.maxScrollExtent - 200) {
+      loadBusinesses();
+    }
   }
 
   Future<void> retry() async {
@@ -163,7 +173,7 @@ class BusinessController extends GetxController {
           searchPage++;
         }
       } catch (e) {
-          Fluttertoast.showToast(
+        Fluttertoast.showToast(
           msg: e.toString().replaceFirst('Exception: ', ''),
           backgroundColor: AppColors.error,
           gravity: ToastGravity.TOP,
@@ -174,11 +184,69 @@ class BusinessController extends GetxController {
     });
   }
 
+  Future<void> loadBusinessById(int id) async {
+    isLoadingProfile.value = true;
+    try {
+      final business = await _businessService.getBusinessById(id);
+      selectedBusiness.value = business;
+    } catch (e) {
+      Fluttertoast.showToast(
+        msg: e.toString().replaceFirst('Exception: ', ''),
+        backgroundColor: AppColors.error,
+        gravity: ToastGravity.TOP,
+      );
+    } finally {
+      isLoadingProfile.value = false;
+    }
+  }
+
+  Future<void> toggleFollow(int businessId) async {
+    if (selectedBusiness.value?.id != businessId) return;
+    final current = selectedBusiness.value!;
+
+    selectedBusiness.value = _copyWith(
+      current,
+      isFollowing: !current.isFollowing,
+      followerCount: current.isFollowing
+          ? current.followerCount - 1
+          : current.followerCount + 1,
+    );
+
+    try {
+      await _businessService.followBusiness(businessId);
+    } catch (e) {
+      selectedBusiness.value = _copyWith(
+        current,
+        isFollowing: current.isFollowing,
+        followerCount: current.followerCount,
+      );
+    }
+  }
+
   void clearSearch() {
     searchController.clear();
     searchResults.clear();
     searchQuery.value = '';
     searchPage = 0;
     hasMoreSearch.value = true;
+  }
+
+  BusinessModel _copyWith(
+    BusinessModel current, {
+    bool? isFollowing,
+    int? followerCount,
+  }) {
+    return BusinessModel(
+      businessName: current.businessName,
+      businessDescription: current.businessDescription,
+      businessLocation: current.businessLocation,
+      verificationStatus: current.verificationStatus,
+      currentPlan: current.currentPlan,
+      followerCount: followerCount ?? current.followerCount,
+      isFollowing: isFollowing ?? current.isFollowing,
+      isFeatured: current.isFeatured,
+      categories: current.categories,
+      id: current.id,
+    );
   }
 }

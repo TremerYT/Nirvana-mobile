@@ -12,4 +12,6 @@ class ApiEndpoints {
   static const String featuredBusinesses = "/api/business/featured";
   static const String businessBySearch = "/api/business/search";
   static const String businessByCategory = "/api/business/category";
+
+  static const String userProfile = "/api/users/me";
 }

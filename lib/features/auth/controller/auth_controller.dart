@@ -48,7 +48,6 @@ class AuthController extends GetxController {
       final payload = {
         "fullName": data["fullName"],
         "email": data["email"],
-        "nationalID": data["nationalID"],
         "phoneNumber": data["phoneNumber"],
         "password": data["password"],
         "purpose": "REGISTER",

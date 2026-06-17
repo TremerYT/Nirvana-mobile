@@ -20,6 +20,11 @@ class VerificationOptions extends GetView<AuthController> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              GestureDetector(
+                onTap: Get.back,
+                child: Icon(Icons.arrow_back, size: 30),
+              ),
+              const SizedBox(height: 10),
               CustomText(
                 text: "Verification options",
                 style: AppTextStyles.titleLarge,
@@ -30,13 +35,15 @@ class VerificationOptions extends GetView<AuthController> {
               CustomCard(
                 pefixIcon: Icons.phone_android,
                 text: "Send verification code to phone",
-                onTap: () => Get.toNamed(AppRoutes.resetInput, arguments: "phone"),
+                onTap: () =>
+                    Get.toNamed(AppRoutes.resetInput, arguments: "phone"),
               ),
               const SizedBox(height: 10),
               CustomCard(
                 pefixIcon: Icons.email,
                 text: "Send verification code to email",
-                onTap: () => Get.toNamed(AppRoutes.resetInput, arguments: "email"),
+                onTap: () =>
+                    Get.toNamed(AppRoutes.resetInput, arguments: "email"),
               ),
             ],
           ),

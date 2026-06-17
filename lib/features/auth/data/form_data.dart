@@ -39,11 +39,6 @@ final registerFields = [
     ],
   ),
   FormFields(
-    label: "National ID",
-    name: "nationalID",
-    validators: [FormBuilderValidators.required()],
-  ),
-  FormFields(
     label: "Phone Number",
     name: "phoneNumber",
     validators: [

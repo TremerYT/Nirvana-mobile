@@ -4,6 +4,7 @@ import 'package:nirvana_mobile/features/auth/views/login_view.dart';
 import 'package:nirvana_mobile/features/auth/views/register_view.dart';
 import 'package:nirvana_mobile/features/auth/views/reset_password.dart';
 import 'package:nirvana_mobile/features/auth/views/verification_view.dart';
+import 'package:nirvana_mobile/features/business/binding/business_binding.dart';
 import 'package:nirvana_mobile/features/onboarding/binding/onboarding_binding.dart';
 import 'package:nirvana_mobile/routes/app_routes.dart';
 
@@ -49,6 +50,10 @@ class AppPages {
       page: () => ResetInputView(),
       binding: AuthBinding(),
     ),
-    GetPage(name: AppRoutes.home, page: () => HomeView()),
+    GetPage(
+      name: AppRoutes.home,
+      page: () => HomeView(),
+      binding: BusinessBinding(),
+    ),
   ];
 }
