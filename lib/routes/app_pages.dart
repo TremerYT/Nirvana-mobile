@@ -6,6 +6,7 @@ import 'package:nirvana_mobile/features/auth/views/reset_password.dart';
 import 'package:nirvana_mobile/features/auth/views/verification_view.dart';
 import 'package:nirvana_mobile/features/business/binding/business_binding.dart';
 import 'package:nirvana_mobile/features/onboarding/binding/onboarding_binding.dart';
+import 'package:nirvana_mobile/features/onboarding/views/splash_view.dart';
 import 'package:nirvana_mobile/routes/app_routes.dart';
 
 import '../features/auth/views/reset_input.dart';
@@ -15,6 +16,7 @@ import '../features/onboarding/views/onboarding_view.dart';
 
 class AppPages {
   static final routes = [
+    GetPage(name: AppRoutes.splash, page: () => SplashView()),
     GetPage(
       name: AppRoutes.onBoarding,
       page: () => OnBoardingView(),

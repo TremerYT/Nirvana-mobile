@@ -6,6 +6,12 @@ class ProfileController extends GetxController {
   final _userService = UserService();
   var currentUser = Rxn<UserModel>();
 
+  @override
+  void onInit() {
+    loadCurrentUser();
+    super.onInit();
+  }
+
   Future<void> loadCurrentUser() async {
     try {
       currentUser.value = await _userService.getCurrentUser();

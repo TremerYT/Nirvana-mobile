@@ -46,7 +46,8 @@ class AuthController extends GetxController {
     try {
       final data = registerFormKey.currentState!.value;
       final payload = {
-        "fullName": data["fullName"],
+        "firstName": data["firstName"],
+        "lastName": data["lastName"],
         "email": data["email"],
         "phoneNumber": data["phoneNumber"],
         "password": data["password"],
@@ -55,13 +56,11 @@ class AuthController extends GetxController {
 
       await _authService.register(payload);
       startTimer();
-
       Get.offNamed(
         AppRoutes.verification,
         arguments: {"purpose": "REGISTRATION", "phone": data["phoneNumber"]},
       );
     } catch (e) {
-      print(e);
       Fluttertoast.showToast(
         msg: e.toString().replaceFirst('Exception: ', ''),
         backgroundColor: AppColors.error,
@@ -90,6 +89,7 @@ class AuthController extends GetxController {
 
       await SecureStorage.setAccessToken(accessToken);
       await SecureStorage.setRefreshToken(refreshToken);
+      await Future.delayed(Duration(seconds: 2));
       Get.offAllNamed(AppRoutes.home);
     } catch (e) {
       Fluttertoast.showToast(

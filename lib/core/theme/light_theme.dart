@@ -20,7 +20,7 @@ final ThemeData lightTheme = ThemeData(
   ),
 
   appBarTheme: AppBarTheme(
-    backgroundColor: AppColors.backgroundLight,
+    backgroundColor: AppColors.primary,
     elevation: 0,
     scrolledUnderElevation: 0,
     centerTitle: true,

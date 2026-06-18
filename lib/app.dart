@@ -13,7 +13,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetMaterialApp(
       title: "Nirvana",
-      initialRoute: AppRoutes.onBoarding,
+      initialRoute: AppRoutes.splash,
       getPages: AppPages.routes,
       theme: lightTheme,
       darkTheme: darkTheme,

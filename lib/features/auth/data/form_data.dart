@@ -26,10 +26,17 @@ final loginFields = [
 
 final registerFields = [
   FormFields(
-    label: "Full Name",
-    name: "fullName",
+    label: "First Name",
+    name: "firstName",
     validators: [FormBuilderValidators.required()],
   ),
+
+  FormFields(
+    label: "Last Name",
+    name: "lastName",
+    validators: [FormBuilderValidators.required()],
+  ),
+
   FormFields(
     label: "Email",
     name: "email",

@@ -48,7 +48,8 @@ class LoginView extends GetView<AuthController> {
                   Align(
                     alignment: AlignmentGeometry.centerEnd,
                     child: TextButton(
-                      onPressed: () => Get.toNamed(AppRoutes.verificationOptions),
+                      onPressed: () =>
+                          Get.toNamed(AppRoutes.verificationOptions),
                       child: CustomText(text: "Forgot Password?"),
                     ),
                   ),
@@ -68,7 +69,7 @@ class LoginView extends GetView<AuthController> {
                     height: 52,
                     child: SignInButton(
                       Buttons.google,
-                      elevation: 0.3,
+                      elevation: 0.5,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadiusGeometry.circular(12),
                       ),
