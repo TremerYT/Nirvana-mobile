@@ -34,43 +34,52 @@ class _CustomFormState extends State<CustomForm> {
           ...widget.fields.map((field) {
             final isObscured = obscureMap[field.name] ?? false;
             return Padding(
-              padding: const EdgeInsets.only(bottom: 10),
-              child: FormBuilderTextField(
-                name: field.name,
-                keyboardType: field.keyboardType,
-                onChanged: (value) {
-                  if (field.name == "password") {
-                    widget.formKey.currentState?.fields["confirmPassword"]
-                        ?.validate();
-                  }
-                },
-                obscureText: field.isPassword ? isObscured : false,
-                decoration: InputDecoration(
-                  labelText: field.label,
-                  suffixIcon: field.isPassword
-                      ? IconButton(
-                          onPressed: () {
-                            setState(() {
-                              obscureMap[field.name] = !isObscured;
-                            });
-                          },
-                          icon: Icon(
-                            isObscured
-                                ? Icons.visibility_off
-                                : Icons.visibility,
-                          ),
-                        )
-                      : null,
-                ),
-                validator: field.validators != null
-                    ? (value) {
-                        for (var v in field.validators!) {
-                          final result = v(value);
-                          if (result != null) return result;
-                        }
-                        return null;
+              padding: const EdgeInsets.only(bottom: 5),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    field.label,
+                    style: Theme.of(context).textTheme.bodyMedium,
+                  ),
+
+                  FormBuilderTextField(
+                    name: field.name,
+                    keyboardType: field.keyboardType,
+                    onChanged: (value) {
+                      if (field.name == "password") {
+                        widget.formKey.currentState?.fields["confirmPassword"]
+                            ?.validate();
                       }
-                    : null,
+                    },
+                    obscureText: field.isPassword ? isObscured : false,
+                    decoration: InputDecoration(
+                      suffixIcon: field.isPassword
+                          ? IconButton(
+                              onPressed: () {
+                                setState(() {
+                                  obscureMap[field.name] = !isObscured;
+                                });
+                              },
+                              icon: Icon(
+                                isObscured
+                                    ? Icons.visibility_off
+                                    : Icons.visibility,
+                              ),
+                            )
+                          : null,
+                    ),
+                    validator: field.validators != null
+                        ? (value) {
+                            for (var v in field.validators!) {
+                              final result = v(value);
+                              if (result != null) return result;
+                            }
+                            return null;
+                          }
+                        : null,
+                  ),
+                ],
               ),
             );
           }),

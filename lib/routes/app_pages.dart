@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:nirvana_mobile/features/auth/bindings/auth_binding.dart';
+import 'package:nirvana_mobile/features/auth/views/authentication_options.dart';
 import 'package:nirvana_mobile/features/auth/views/login_view.dart';
 import 'package:nirvana_mobile/features/auth/views/register_view.dart';
 import 'package:nirvana_mobile/features/auth/views/reset_password.dart';
@@ -21,6 +22,11 @@ class AppPages {
       name: AppRoutes.onBoarding,
       page: () => OnBoardingView(),
       binding: OnboardingBinding(),
+    ),
+    GetPage(
+      name: AppRoutes.authenticationOptions,
+      page: () => AuthenticationOptions(),
+      binding: AuthBinding(),
     ),
     GetPage(
       name: AppRoutes.login,

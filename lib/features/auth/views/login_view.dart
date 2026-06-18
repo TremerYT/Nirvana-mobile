@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:lottie/lottie.dart';
 import 'package:nirvana_mobile/core/theme/app_colors.dart';
 import 'package:nirvana_mobile/core/theme/app_textstyle.dart';
 import 'package:nirvana_mobile/core/widgets/custom_button.dart';
+import 'package:nirvana_mobile/core/widgets/custom_divider.dart';
 import 'package:nirvana_mobile/core/widgets/custom_text.dart';
 import 'package:nirvana_mobile/features/auth/controller/auth_controller.dart';
 import 'package:nirvana_mobile/features/auth/widgets/custom_background.dart';
@@ -27,33 +27,37 @@ class LoginView extends GetView<AuthController> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Align(
-                    alignment: Alignment.center,
-                    child: Lottie.asset(
-                      'assets/lottie/login.json',
-                      height: 250,
-                      fit: BoxFit.contain,
+                  CustomText(
+                    text: "Emporia",
+                    style: GoogleFonts.pacifico(
+                      textStyle: AppTextStyles.titleLarge,
+                      fontSize: 35,
+                      color: Theme.of(context).colorScheme.onSurface,
+                      height: 1.2,
                     ),
                   ),
+                  const SizedBox(height: 15),
                   CustomText(
-                    text: "Login to continue using the app",
-                    style: AppTextStyles.titleLarge,
+                    text: "Hi, Welcome Back 👋",
+                    style: AppTextStyles.titleLarge.copyWith(
+                      fontWeight: FontWeight.w800,
+                    ),
                   ),
                   const SizedBox(height: 10),
+                  CustomText(text: "Sign in to your account"),
+                  const SizedBox(height: 50),
                   CustomForm(
                     formKey: controller.loginFormKey,
                     fields: controller.loginFormFields,
                   ),
-
                   Align(
-                    alignment: AlignmentGeometry.centerEnd,
+                    alignment: Alignment.centerRight,
                     child: TextButton(
                       onPressed: () =>
                           Get.toNamed(AppRoutes.verificationOptions),
-                      child: CustomText(text: "Forgot Password?"),
+                      child: const CustomText(text: "Forgot Password?"),
                     ),
                   ),
-
                   Obx(
                     () => CustomButton(
                       text: "Login",
@@ -63,7 +67,9 @@ class LoginView extends GetView<AuthController> {
                       isLoading: controller.isLoading.value,
                     ),
                   ),
-                  const SizedBox(height: 10),
+                  const SizedBox(height: 20),
+                  CustomDivider(text: "Or Sign in with"),
+                  const SizedBox(height: 20),
                   SizedBox(
                     width: double.infinity,
                     height: 52,
@@ -71,14 +77,14 @@ class LoginView extends GetView<AuthController> {
                       Buttons.google,
                       elevation: 0.5,
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadiusGeometry.circular(12),
+                        borderRadius: BorderRadius.circular(12),
                       ),
                       onPressed: () {},
                       text: 'Sign in with Google',
                       textStyle: GoogleFonts.poppins(
                         fontSize: 15,
                         fontWeight: FontWeight.w600,
-                        textStyle: TextStyle(color: AppColors.textPrimaryLight),
+                        color: AppColors.textPrimaryLight,
                         letterSpacing: 0.3,
                       ),
                     ),
@@ -91,25 +97,25 @@ class LoginView extends GetView<AuthController> {
                       Buttons.appleDark,
                       elevation: 0,
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadiusGeometry.circular(12),
+                        borderRadius: BorderRadius.circular(12),
                       ),
                       onPressed: () {},
                       text: 'Sign in with Apple',
                       textStyle: GoogleFonts.poppins(
                         fontSize: 15,
                         fontWeight: FontWeight.w600,
-                        textStyle: TextStyle(color: AppColors.textPrimary),
+                        color: AppColors.textPrimary,
                         letterSpacing: 0.3,
                       ),
                     ),
                   ),
-                  const SizedBox(height: 10),
+                  const SizedBox(height: 20),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      CustomText(text: "Don't have an account?"),
+                      const CustomText(text: "Don't have an account?"),
                       TextButton(
-                        onPressed: () => Get.toNamed('/register'),
+                        onPressed: () => Get.offNamed(AppRoutes.register),
                         style: TextButton.styleFrom(
                           padding: const EdgeInsets.only(left: 4),
                           minimumSize: Size.zero,

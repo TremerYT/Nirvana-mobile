@@ -1,6 +1,7 @@
 class AppRoutes {
   static const splash = "/";
   static const onBoarding = "/onBoarding";
+  static const authenticationOptions = "/authOptions";
   static const login = "/login";
   static const register = "/register";
   static const verification = "/verification";

@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
+import 'package:nirvana_mobile/routes/app_routes.dart';
 
 import '../data/onboarding_data.dart';
 
@@ -39,6 +40,6 @@ class OnboardingController extends GetxController {
   }
 
   void finish() {
-    Get.offAllNamed('/login');
+    Get.offAllNamed(AppRoutes.authenticationOptions);
   }
 }

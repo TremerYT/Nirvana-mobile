@@ -119,7 +119,9 @@ final ThemeData lightTheme = ThemeData(
     checkColor: WidgetStatePropertyAll(AppColors.accentText),
     side: const BorderSide(color: AppColors.borderLight, width: 1.5),
     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
-    overlayColor: WidgetStatePropertyAll(AppColors.primary.withOpacity(0.08)),
+    overlayColor: WidgetStatePropertyAll(
+      AppColors.primary.withValues(alpha: 0.08),
+    ),
   ),
 
   chipTheme: ChipThemeData(

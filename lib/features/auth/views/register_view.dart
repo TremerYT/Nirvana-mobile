@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:nirvana_mobile/core/widgets/custom_divider.dart';
 import 'package:nirvana_mobile/core/widgets/custom_text.dart';
 import 'package:nirvana_mobile/features/auth/controller/auth_controller.dart';
 import 'package:nirvana_mobile/features/auth/widgets/custom_background.dart';
 import 'package:nirvana_mobile/features/auth/widgets/custom_form.dart';
+import 'package:nirvana_mobile/routes/app_routes.dart';
 import 'package:sign_in_button/sign_in_button.dart';
 
 import '../../../core/theme/app_colors.dart';
@@ -26,11 +28,6 @@ class RegisterView extends GetView<AuthController> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  GestureDetector(
-                    onTap: Get.back,
-                    child: Icon(Icons.arrow_back, size: 30),
-                  ),
-                  const SizedBox(height: 10),
                   CustomText(
                     text: "Getting Started",
                     style: AppTextStyles.displayLarge,
@@ -40,7 +37,7 @@ class RegisterView extends GetView<AuthController> {
                     text:
                         "Seems like you are new here. Lets set up your profile below",
                   ),
-                  const SizedBox(height: 5),
+                  const SizedBox(height: 10),
                   CustomForm(
                     formKey: controller.registerFormKey,
                     fields: controller.registerFormFields,
@@ -73,52 +70,60 @@ class RegisterView extends GetView<AuthController> {
                     ),
                   ),
                   const SizedBox(height: 10),
-                  SizedBox(
-                    width: double.infinity,
-                    height: 52,
-                    child: SignInButton(
-                      Buttons.google,
-                      elevation: 0.3,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadiusGeometry.circular(12),
-                      ),
-                      onPressed: () {},
-                      text: 'Sign up with Google',
-                      textStyle: GoogleFonts.poppins(
-                        fontSize: 15,
-                        fontWeight: FontWeight.w600,
-                        textStyle: TextStyle(color: AppColors.textPrimaryLight),
-                        letterSpacing: 0.3,
-                      ),
-                    ),
-                  ),
+                  CustomDivider(text: "Or Sign up with"),
                   const SizedBox(height: 10),
-                  SizedBox(
-                    width: double.infinity,
-                    height: 52,
-                    child: SignInButton(
-                      Buttons.appleDark,
-                      elevation: 0,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadiusGeometry.circular(12),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: SizedBox(
+                          height: 52,
+                          child: SignInButton(
+                            Buttons.google,
+                            elevation: 0.5,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(12),
+                            ),
+                            onPressed: () {},
+                            text: 'Google',
+                            textStyle: GoogleFonts.poppins(
+                              fontSize: 14,
+                              fontWeight: FontWeight.w600,
+                              color: Colors.black87,
+                              letterSpacing: 0.3,
+                            ),
+                          ),
+                        ),
                       ),
-                      onPressed: () {},
-                      text: 'Sign up with Apple',
-                      textStyle: GoogleFonts.poppins(
-                        fontSize: 15,
-                        fontWeight: FontWeight.w600,
-                        textStyle: TextStyle(color: AppColors.textPrimary),
-                        letterSpacing: 0.3,
+                      const SizedBox(width: 12),
+                      Expanded(
+                        child: SizedBox(
+                          height: 52,
+                          child: SignInButton(
+                            Buttons.appleDark,
+                            elevation: 0,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(12),
+                            ),
+                            onPressed: () {},
+                            text: 'Apple',
+                            textStyle: GoogleFonts.poppins(
+                              fontSize: 14,
+                              fontWeight: FontWeight.w600,
+                              color: Colors.white,
+                              letterSpacing: 0.3,
+                            ),
+                          ),
+                        ),
                       ),
-                    ),
+                    ],
                   ),
-                  const SizedBox(height: 10),
+                  const SizedBox(height: 20),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       CustomText(text: "Already have an account?"),
                       TextButton(
-                        onPressed: () => Get.toNamed('/login'),
+                        onPressed: () => Get.offNamed(AppRoutes.login),
                         style: TextButton.styleFrom(
                           padding: const EdgeInsets.only(left: 4),
                           minimumSize: Size.zero,

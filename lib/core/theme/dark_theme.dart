@@ -118,7 +118,7 @@ final ThemeData darkTheme = ThemeData(
     checkColor: WidgetStatePropertyAll(AppColors.accentText),
     side: const BorderSide(color: AppColors.border, width: 1.5),
     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
-    overlayColor: WidgetStatePropertyAll(AppColors.primary.withOpacity(0.1)),
+    overlayColor: WidgetStatePropertyAll(AppColors.primary.withValues(alpha: 0.1)),
   ),
 
   chipTheme: ChipThemeData(

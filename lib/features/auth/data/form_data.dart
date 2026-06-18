@@ -86,7 +86,7 @@ final registerFields = [
             return "Passwords do not match";
           }
         } catch (e) {
-          print('Error comparing passwords: $e');
+          //
         }
         return null;
       },
@@ -146,7 +146,7 @@ final resetPasswordFields = [
             return "Passwords do not match";
           }
         } catch (e) {
-          print('Error comparing passwords: $e');
+          //
         }
         return null;
       },
