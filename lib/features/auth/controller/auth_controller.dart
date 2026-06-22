@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
-import 'package:lottie/lottie.dart';
 import 'package:nirvana_mobile/core/storage/secure_storage.dart';
 import 'package:nirvana_mobile/core/theme/app_colors.dart';
 import 'package:nirvana_mobile/features/auth/data/form_data.dart';
@@ -15,12 +14,9 @@ class AuthController extends GetxController {
 
   final loginFormKey = GlobalKey<FormBuilderState>();
   final registerFormKey = GlobalKey<FormBuilderState>();
-  final forgortPasswordFormKey = GlobalKey<FormBuilderState>();
+  final forgotPasswordFormKey = GlobalKey<FormBuilderState>();
   final resetFormKey = GlobalKey<FormBuilderState>();
   final resetPasswordFormKey = GlobalKey<FormBuilderState>();
-
-  final composition = Rxn<LottieComposition>();
-  final compositionPath = "assets/lottie/login.json";
 
   final loginFormFields = loginFields;
   final registerFormFields = registerFields;
@@ -28,16 +24,28 @@ class AuthController extends GetxController {
   final resetFieldsPhone = resetPhoneFields;
   final resetFieldsEmail = resetEmailFields;
 
-  var rememberMe = false.obs;
   var otp = ''.obs;
   var seconds = 60.obs;
   var isLoading = false.obs;
-  var isVerified = false.obs;
-  var reset = false.obs;
-  var resetInput = "".obs;
 
-  final phoneNumber = ''.obs;
-  final email = "".obs;
+  bool _isTimerRunning = false;
+
+  @override
+  void onReady() {
+    super.onReady();
+    _startTimerIfNeeded();
+  }
+
+  void _startTimerIfNeeded() {
+    final args = Get.arguments as Map<String, dynamic>?;
+    if (args != null) {
+      final purpose = args['purpose']?.toString();
+      if ((purpose == "REGISTRATION" || purpose == "VERIFICATION") &&
+          !_isTimerRunning) {
+        startTimer();
+      }
+    }
+  }
 
   Future<void> register() async {
     if (!(registerFormKey.currentState?.saveAndValidate() ?? false)) return;
@@ -53,9 +61,7 @@ class AuthController extends GetxController {
         "password": data["password"],
         "purpose": "REGISTER",
       };
-
       await _authService.register(payload);
-      startTimer();
       Get.offNamed(
         AppRoutes.verification,
         arguments: {"purpose": "REGISTRATION", "phone": data["phoneNumber"]},
@@ -116,7 +122,7 @@ class AuthController extends GetxController {
   }
 
   Future<void> verify() async {
-    if (otp.value.length < 6) {
+    if (otp.value.length < 4) {
       Fluttertoast.showToast(
         msg: "Please enter a valid Otp code",
         backgroundColor: AppColors.error,
@@ -165,9 +171,7 @@ class AuthController extends GetxController {
   }
 
   Future<void> requestOtp(String type) async {
-    if (!(resetFormKey.currentState?.saveAndValidate() ?? false)) {
-      return;
-    }
+    if (!(resetFormKey.currentState?.saveAndValidate() ?? false)) return;
     isLoading.value = true;
     try {
       final data = resetFormKey.currentState!.value;
@@ -179,14 +183,14 @@ class AuthController extends GetxController {
           "email": data["email"],
       };
       await _authService.requestOtp(payload);
-      startTimer();
+
       Fluttertoast.showToast(
-        msg: "OTP sent. Please verify your email or phone number",
+        msg: "OTP sent successfully",
         backgroundColor: AppColors.success,
         gravity: ToastGravity.TOP,
         toastLength: Toast.LENGTH_LONG,
       );
-      Get.toNamed("/verification", arguments: payload);
+      Get.toNamed(AppRoutes.verification, arguments: payload);
     } catch (e) {
       Fluttertoast.showToast(
         msg: e.toString().replaceFirst('Exception: ', ''),
@@ -229,19 +233,25 @@ class AuthController extends GetxController {
     }
   }
 
-  void setOtp(String code) {
-    otp.value = code;
-  }
-
   void startTimer() {
+    if (_isTimerRunning) return;
+
     seconds.value = 60;
+    _isTimerRunning = true;
+
     Future.doWhile(() async {
-      await Future.delayed(Duration(seconds: 1));
+      await Future.delayed(const Duration(seconds: 1));
       if (seconds.value > 0) {
         seconds.value--;
         return true;
+      } else {
+        _isTimerRunning = false;
+        return false;
       }
-      return false;
     });
+  }
+
+  void setOtp(String code) {
+    otp.value = code;
   }
 }

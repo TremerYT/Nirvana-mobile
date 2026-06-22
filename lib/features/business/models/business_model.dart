@@ -29,7 +29,8 @@ class BusinessModel {
 
   factory BusinessModel.fromJson(Map<String, dynamic> json) {
     return BusinessModel(
-      businessName: json["id"],
+      id: json["id"],
+      businessName: json["businessName"],
       businessDescription: json["businessDescription"],
       businessLocation: json["businessLocation"],
       verificationStatus: json["verificationStatus"],
@@ -38,7 +39,6 @@ class BusinessModel {
       isFollowing: json["isFollowing"],
       isFeatured: json["isFeatured"],
       categories: List<String>.from(json['categories'] ?? []),
-      id: json["id"],
     );
   }
 }

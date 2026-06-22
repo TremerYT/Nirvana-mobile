@@ -135,18 +135,12 @@ final resetPasswordFields = [
     validators: [
       FormBuilderValidators.required(),
       (value) {
-        try {
-          final formState =
-              Get.find<AuthController>().resetPasswordFormKey.currentState;
-          if (formState == null) return null;
+        final controller = Get.find<AuthController>();
+        final formKey = controller.registerFormKey; // or resetPasswordFormKey
 
-          final passwordValue = formState.value['password'];
-
-          if (value != passwordValue) {
-            return "Passwords do not match";
-          }
-        } catch (e) {
-          //
+        final password = formKey.currentState?.value['password'];
+        if (value != password) {
+          return "Passwords do not match";
         }
         return null;
       },

@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_navigation/src/extension_navigation.dart';
+import 'package:nirvana_mobile/core/network/api_endpoints.dart';
 import 'package:nirvana_mobile/core/network/dio_client.dart';
 import 'package:nirvana_mobile/core/storage/secure_storage.dart';
 
@@ -36,7 +37,7 @@ class AuthInterceptor extends Interceptor {
 
         final dio = Dio(BaseOptions(baseUrl: DioClient.dio.options.baseUrl));
         final response = await dio.post(
-          '/api/auth/refresh-token',
+          ApiEndpoints.refreshToken,
           data: {"refreshToken": refreshToken},
         );
         final newAccessToken = response.data['accessToken'];

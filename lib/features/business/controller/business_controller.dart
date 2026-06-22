@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
+import 'package:get/get_connect/http/src/utils/utils.dart';
 import 'package:nirvana_mobile/core/services/business_service.dart';
 import 'package:nirvana_mobile/core/theme/app_colors.dart';
 import 'package:nirvana_mobile/features/business/models/business_model.dart';
@@ -23,6 +24,7 @@ class BusinessController extends GetxController {
   var featuredPage = 0;
   var searchPage = 0;
   var businessesPage = 0;
+
   var hasMoreFeatured = true.obs;
   var hasMoreSearch = true.obs;
   var hasMoreBusinesses = true.obs;
@@ -32,7 +34,6 @@ class BusinessController extends GetxController {
   var hasError = false.obs;
 
   Timer? _searchDebounce;
-
   final searchController = TextEditingController();
   final scrollController = ScrollController();
 
@@ -56,6 +57,7 @@ class BusinessController extends GetxController {
 
   @override
   void onClose() {
+    _searchDebounce?.cancel();
     searchController.dispose();
     scrollController.dispose();
     super.onClose();
@@ -63,7 +65,7 @@ class BusinessController extends GetxController {
 
   void _onScroll() {
     if (scrollController.position.pixels >=
-        scrollController.position.maxScrollExtent - 200) {
+        scrollController.position.maxScrollExtent - 300) {
       loadBusinesses();
     }
   }
@@ -74,7 +76,10 @@ class BusinessController extends GetxController {
 
   Future<void> loadInitialData() async {
     hasError.value = false;
-    await Future.wait([loadFeaturedBusinesses(), loadBusinesses()]);
+    await Future.wait([
+      loadFeaturedBusinesses(refresh: true),
+      loadBusinesses(refresh: true),
+    ]);
   }
 
   Future<void> loadFeaturedBusinesses({bool refresh = false}) async {
@@ -98,6 +103,10 @@ class BusinessController extends GetxController {
       }
     } catch (e) {
       hasError.value = true;
+      Fluttertoast.showToast(
+        msg: "Failed to load featured businesses",
+        gravity: ToastGravity.TOP,
+      );
     } finally {
       isLoadingFeatured.value = false;
     }
@@ -154,7 +163,6 @@ class BusinessController extends GetxController {
     }
 
     _searchDebounce?.cancel();
-
     _searchDebounce = Timer(const Duration(milliseconds: 500), () async {
       searchPage = 0;
       hasMoreSearch.value = true;
@@ -201,13 +209,14 @@ class BusinessController extends GetxController {
   }
 
   Future<void> toggleFollow(int businessId) async {
-    if (selectedBusiness.value?.id != businessId) return;
-    final current = selectedBusiness.value!;
+    final current = selectedBusiness.value;
+    if (current == null || current.id != businessId) return;
 
+    final wasFollowing = current.isFollowing;
     selectedBusiness.value = _copyWith(
       current,
-      isFollowing: !current.isFollowing,
-      followerCount: current.isFollowing
+      isFollowing: !wasFollowing,
+      followerCount: wasFollowing
           ? current.followerCount - 1
           : current.followerCount + 1,
     );
@@ -217,9 +226,10 @@ class BusinessController extends GetxController {
     } catch (e) {
       selectedBusiness.value = _copyWith(
         current,
-        isFollowing: current.isFollowing,
+        isFollowing: wasFollowing,
         followerCount: current.followerCount,
       );
+      Fluttertoast.showToast(msg: "Failed to update follow status");
     }
   }
 
@@ -237,6 +247,7 @@ class BusinessController extends GetxController {
     int? followerCount,
   }) {
     return BusinessModel(
+      id: current.id,
       businessName: current.businessName,
       businessDescription: current.businessDescription,
       businessLocation: current.businessLocation,
@@ -246,7 +257,6 @@ class BusinessController extends GetxController {
       isFollowing: isFollowing ?? current.isFollowing,
       isFeatured: current.isFeatured,
       categories: current.categories,
-      id: current.id,
     );
   }
 }

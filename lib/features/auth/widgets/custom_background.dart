@@ -17,7 +17,7 @@ class CustomBackground extends StatelessWidget {
               Theme.of(context).colorScheme.primary,
               Theme.of(context).colorScheme.surface,
             ],
-            stops: const [0.0, 0.6],
+            stops: const [0.0, 0.7],
           ),
         ),
         child: SafeArea(child: child),

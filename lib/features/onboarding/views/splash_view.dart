@@ -78,7 +78,7 @@ class _SplashViewState extends State<SplashView> with TickerProviderStateMixin {
         },
         onVerticalDragEnd: (details) {
           if (details.primaryVelocity != null &&
-              details.primaryVelocity! < -300) {
+              details.primaryVelocity! < -180) {
             _handleSwipeUp();
           }
         },
@@ -88,8 +88,8 @@ class _SplashViewState extends State<SplashView> with TickerProviderStateMixin {
               top: -100,
               left: -100,
               child: Container(
-                width: 280,
-                height: 280,
+                width: 260,
+                height: 260,
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
                   color: AppColors.primary.withValues(alpha: 0.7),
@@ -98,13 +98,13 @@ class _SplashViewState extends State<SplashView> with TickerProviderStateMixin {
             ),
             Positioned(
               bottom: -100,
-              right: -90,
+              right: -100,
               child: Container(
                 width: 260,
                 height: 260,
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
-                  color: AppColors.accent.withValues(alpha: 0.6),
+                  color: AppColors.accent.withValues(alpha: 0.7),
                 ),
               ),
             ),

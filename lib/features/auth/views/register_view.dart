@@ -28,6 +28,11 @@ class RegisterView extends GetView<AuthController> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                  GestureDetector(
+                    child: Icon(Icons.arrow_back, size: 30),
+                    onTap: () => Get.offNamed(AppRoutes.login),
+                  ),
+                  SizedBox(height: 5),
                   CustomText(
                     text: "Getting Started",
                     style: AppTextStyles.displayLarge,
